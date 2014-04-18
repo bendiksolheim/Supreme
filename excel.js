@@ -6,14 +6,6 @@
 		}
 	}
 
-	/*var editableCells = document.querySelectorAll('.editable');
-	each(editableCells, function(cell) {
-		cell.addEventListener('click', function(event) {
-			var target = event.target;
-			target.contentEditable=true;
-		});
-	});*/
-
 	function Excel(table, width, height) {
 		this.table = table;
 		this.width = width;
