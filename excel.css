@@ -1,0 +1,62 @@
+*, *:before, *:after {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+body {
+	background: white;
+	font-family: 'Helvetica Neue', Arial;
+	font-size: 14px;
+	margin: 0;
+	padding: 0;
+}
+
+table {
+	border-collapse: collapse;
+	table-layout: fixed;
+	width: 100%;
+}
+
+td, th {
+	padding-bottom: 5px;
+	padding-top: 5px;
+}
+
+th {
+	border-top: 0;
+}
+
+.header {
+	background: #f2f2f2;
+	color: #9a9a9a;
+	font-weight: normal;
+	text-shadow: white 1px 1px;
+}
+
+.col-header {
+	border-right: 1px solid #ececec;
+	border-bottom: 1px solid #dcdcdc;
+}
+
+.row-header {
+	border-bottom: 1px solid #ececec;
+	border-right: 1px solid #dcdcdc;
+	text-align: center;
+}
+
+.corner {
+	border-right: 1px solid #ececec;
+	border-bottom: 1px solid #ececec;
+	width: 40px;
+}
+
+.editable {
+	border: 1px solid #f3f3f3;
+	text-align: right;
+}
+
+.editable:focus {
+	background: #edbc76;
+	outline: 0;
+}
