@@ -60,4 +60,7 @@
 	};
 
 	var excel = new Excel(document.querySelector('.table'), 10, 10);
+	window.Excel = Excel;
+	window.excel = excel;
+
 })(window);
