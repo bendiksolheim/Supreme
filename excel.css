@@ -31,6 +31,7 @@ th {
 	background: #f2f2f2;
 	color: #9a9a9a;
 	font-weight: normal;
+	font-size: 13px;
 	text-shadow: white 1px 1px;
 }
 
@@ -59,4 +60,15 @@ th {
 .editable:focus {
 	background: #edbc76;
 	outline: 0;
+}
+
+/*=================*/
+.test {
+    border: 1px solid black;
+    height: 20px;
+    width: 200px;
+}
+
+.test:focus {
+    background: red;
 }
