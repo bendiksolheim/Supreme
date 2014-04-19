@@ -1,6 +1,21 @@
 (function(window) {
-	function Cell(value) {
+	var RETURN = 13;
+	var ARROW_LEFT = {code: 37, dx: -1, dy: 0};
+	var ARROW_UP = {code: 38, dx: 0, dy: -1};
+	var ARROW_RIGHT = {code: 39, dx: 1, dy: 0};
+	var ARROW_DOWN = {code: 40, dx: 0, dy: 1};
+	var ARROW_KEYS = {
+		'37': ARROW_LEFT,
+		'38': ARROW_UP,
+		'39': ARROW_RIGHT,
+		'40': ARROW_DOWN
+	};
+
+	function Cell(y, x, value, parent) {
+		this.y = y;
+		this.x = x;
 		this.value = value;
+		this.parent = parent;
 		this.element = this._createElement();
 	}
 
@@ -11,7 +26,7 @@
 		td.addEventListener('dblclick', this, false);
 		td.addEventListener('focusout', this, false);
 		td.addEventListener('change', this, false);
-		td.addEventListener('keypress', this, false);
+		td.addEventListener('keydown', this, false);
 		return td;
 	};
 
@@ -26,9 +41,8 @@
 			case 'change':
 				this._change(this.element.innerHTML);
 				break;
-			case 'keypress':
-				this._keypressed(event);
-				break;
+			case 'keydown':
+				this._keydown(event);
 		}
 	};
 
@@ -46,6 +60,10 @@
 		this.element.innerHTML = value;
 	};
 
+	Cell.prototype.focus = function() {
+		this.element.focus();
+	};
+
 	Cell.prototype.activate = function() {
 		var event = new MouseEvent('dblclick', {
 			'view': window,
@@ -55,10 +73,18 @@
 		this.element.dispatchEvent(event);
 	};
 
-	Cell.prototype._keypressed = function(event) {
+	Cell.prototype._keydown = function(event) {
 		var keyCode = event.keyCode;
-		if (keyCode == 13) {
-			this.element.blur();
+		switch (keyCode) {
+			case RETURN:
+				this.element.blur();
+				break;
+			case ARROW_LEFT.code:
+			case ARROW_UP.code:
+			case ARROW_RIGHT.code:
+			case ARROW_DOWN.code:
+				this.parent.shift(this, ARROW_KEYS[keyCode]);
+				break;
 		}
 	};
 

@@ -19,7 +19,7 @@
 		for (var y = 0; y < height; y++) {
 			var row = [];
 			for (var x = 0; x < width; x++) {
-				row.push(new Cell(''));
+				row.push(new Cell(y, x, '', this));
 			}
 			model.push(row);
 		}
@@ -57,6 +57,17 @@
 			tbody.appendChild(tr);
 		}
 		this.table.appendChild(tbody);
+	};
+
+	Excel.prototype.shift = function(cell, direction) {
+		var x = cell.x + direction.dx;
+		var y = cell.y + direction.dy;
+		if (x < 0 || y < 0 || x >= this.width || y >= this.height) {
+			console.log("outside");
+			return;
+		}
+
+		this.model[y][x].focus();
 	};
 
 	var excel = new Excel(document.querySelector('.table'), 10, 10);
