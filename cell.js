@@ -1,10 +1,10 @@
 (function(window) {
 	function Cell(value) {
 		this.value = value;
-		this.element = this.__createElement();
+		this.element = this._createElement();
 	}
 
-	Cell.prototype.__createElement = function() {
+	Cell.prototype._createElement = function() {
 		var td = document.createElement('td');
 		td.className = 'editable';
 		td.tabIndex = '-1';
@@ -18,30 +18,30 @@
 	Cell.prototype.handleEvent = function(event) {
 		switch (event.type) {
 			case 'dblclick':
-				this.edit();
+				this._edit();
 				break;
 			case 'focusout':
-				this.unfocus();
+				this._unfocus();
 				break;
 			case 'change':
-				this.change(this.element.innerHTML);
+				this._change(this.element.innerHTML);
 				break;
 			case 'keypress':
-				this.keypressed(event);
+				this._keypressed(event);
 				break;
 		}
 	};
 
-	Cell.prototype.edit = function(event) {
+	Cell.prototype._edit = function(event) {
 		this.element.contentEditable = true;
 		this.element.focus();
 	};
 
-	Cell.prototype.unfocus = function() {
+	Cell.prototype._unfocus = function() {
 		this.element.contentEditable = false;
 	};
 
-	Cell.prototype.change = function(value) {
+	Cell.prototype._change = function(value) {
 		this.value = value;
 		this.element.innerHTML = value;
 	};
@@ -55,7 +55,7 @@
 		this.element.dispatchEvent(event);
 	};
 
-	Cell.prototype.keypressed = function(event) {
+	Cell.prototype._keypressed = function(event) {
 		var keyCode = event.keyCode;
 		if (keyCode == 13) {
 			this.element.blur();

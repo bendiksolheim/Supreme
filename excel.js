@@ -9,12 +9,12 @@
 		this.table = table;
 		this.width = width;
 		this.height = height;
-		this.model = this.__createModel(width, height);
-		this.__createHeaders();
-		this.__createBody();
+		this.model = this._createModel(width, height);
+		this._createHeaders();
+		this._createBody();
 	}
 
-	Excel.prototype.__createModel = function(width, height) {
+	Excel.prototype._createModel = function(width, height) {
 		var model = [];
 		for (var y = 0; y < height; y++) {
 			var row = [];
@@ -27,7 +27,7 @@
 		return model;
 	};
 
-	Excel.prototype.__createHeaders = function() {
+	Excel.prototype._createHeaders = function() {
 		var thead = document.createElement('thead');
 		var tr = document.createElement('tr');
 		var corner = document.createElement('th');
@@ -43,7 +43,7 @@
 		this.table.appendChild(thead);
 	};
 
-	Excel.prototype.__createBody = function() {
+	Excel.prototype._createBody = function() {
 		var tbody = document.createElement('tbody');
 		for (var col = 0; col < this.height; col++) {
 			var tr = document.createElement('tr');
