@@ -8,14 +8,13 @@
 	}
 
 	Input.prototype._createElement = function() {
-		var input = document.createElement('input');
-		input.className = 'input';
-		input.style.position = 'absolute';
-		input.style.borderWidth = 0;
-		input.style.backgroundColor = 'transparent';
-		input.style.pointerEvents = 'none';
-		input.addEventListener('keydown', this, false);
-		document.body.appendChild(input);
+		var input = new d('input.input');
+		input.style('position', 'absolute');
+		input.style('borderWidth', 0);
+		input.style('backgroundColor', 'transparent');
+		input.style('pointerEvents', 'none');
+		input.on('keydown', this, false);
+		document.body.appendChild(input.get());
 		return input;
 	};
 
@@ -33,10 +32,11 @@
 	};
 
 	Input.prototype._moveTo = function(cellBounds) {
-		this.element.style.left = px(cellBounds.x);
-		this.element.style.top = px(cellBounds.y);
-		this.element.style.width = px(cellBounds.width);
-		this.element.style.height = px(cellBounds.height);
+		var element = this.element;
+		element.style('left', px(cellBounds.x));
+		element.style('top', px(cellBounds.y));
+		element.style('width', px(cellBounds.width));
+		element.style('height', px(cellBounds.height));
 	};
 
 	Input.prototype._edit = function(cell) {
@@ -47,8 +47,8 @@
 	};
 
 	Input.prototype._doneEditing = function(event) {
-		this.cell.change(this.element.value);
-		this.element.value = '';
+		this.cell.change(this.element.value());
+		this.element.value('');
 		this.element.blur();
 		this.cell.focus();
 	};

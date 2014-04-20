@@ -24,35 +24,32 @@
 	};
 
 	Excel.prototype._createHeaders = function() {
-		var thead = document.createElement('thead');
-		var tr = document.createElement('tr');
-		var corner = document.createElement('th');
-		corner.className = 'header corner';
-		tr.appendChild(corner);
+		var thead = new d('thead');
+		var tr = new d('tr');
+		var corner = new d('th.header.corner');
+		tr.append(corner);
 		for (var col = 0; col < this.width; col++) {
-			var th = document.createElement('th');
-			th.className = 'header col-header';
-			th.innerHTML = String.fromCharCode(col + 65);
-			tr.appendChild(th);
+			var th = new d('th.header.col-header');
+			th.html(String.fromCharCode(col + 65));
+			tr.append(th);
 		}
-		thead.appendChild(tr);
-		this.table.appendChild(thead);
+		thead.append(tr);
+		this.table.append(thead);
 	};
 
 	Excel.prototype._createBody = function() {
-		var tbody = document.createElement('tbody');
+		var tbody = new d('tbody');
 		for (var col = 0; col < this.height; col++) {
-			var tr = document.createElement('tr');
-			var rowHeader = document.createElement('td');
-			rowHeader.className = 'header row-header';
-			rowHeader.innerHTML = col;
-			tr.appendChild(rowHeader);
+			var tr = new d('tr');
+			var rowHeader = new d('td.header.row-header');
+			rowHeader.html(col);
+			tr.append(rowHeader);
 			for (var row = 0; row < this.width; row++) {
-				tr.appendChild(this.model[col][row].element);
+				tr.append(this.model[col][row].element);
 			}
-			tbody.appendChild(tr);
+			tbody.append(tr);
 		}
-		this.table.appendChild(tbody);
+		this.table.append(tbody);
 	};
 
 	Excel.prototype.shift = function(cell, direction) {
@@ -78,7 +75,7 @@
 		this.input._doneEditing(cell);
 	};
 
-	var excel = new Excel(document.querySelector('.table'), 10, 10);
+	var excel = new Excel(new d('.table'), 10, 10);
 	window.Excel = Excel;
 	window.excel = excel;
 

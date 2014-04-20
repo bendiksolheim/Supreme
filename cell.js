@@ -21,13 +21,9 @@
 	}
 
 	Cell.prototype._createElement = function() {
-		var td = document.createElement('td');
-		td.className = 'editable';
-		td.tabIndex = '-1';
-		td.addEventListener('mousedown', this, false);
-		td.addEventListener('dblclick', this, false);
-		td.addEventListener('change', this, false);
-		td.addEventListener('keydown', this, false);
+		var td = new d('td.editable');
+		td.domProp('tabIndex', '-1');
+		td.on('keydown mousedown dblclick change', this, false);
 		return td;
 	};
 
@@ -40,7 +36,7 @@
 				this._edit();
 				break;
 			case 'change':
-				this.change(this.element.innerHTML);
+				this.change(this.element.html());
 				break;
 			case 'keydown':
 				this._keydown(event);
@@ -58,21 +54,21 @@
 	};
 
 	Cell.prototype._focus = function() {
-		if (this.element.classList.contains('active'))
+		if (this.element.hasClass('active'))
 			return;
 
-		this.element.classList.add('active');
+		this.element.addClass('active');
 		this.parent._setActive(this);
 		this.element.focus();
 	};
 
 	Cell.prototype._unfocus = function() {
-		this.element.classList.remove('active');
+		this.element.removeClass('active');
 	};
 
 	Cell.prototype.change = function(value) {
 		this.value = value;
-		this.element.innerHTML = value;
+		this.element.html(value);
 	};
 
 	/*Cell.prototype._toggleEdit = function(first_argument) {
@@ -99,10 +95,10 @@
 
 	Cell.prototype.bounds = function() {
 		return {
-			x: this.element.offsetLeft,
-			y: this.element.offsetTop,
-			width: this.element.offsetWidth,
-			height: this.element.offsetHeight
+			x: this.element.domProp('offsetLeft'),
+			y: this.element.domProp('offsetTop'),
+			width: this.element.domProp('offsetWidth'),
+			height: this.element.domProp('offsetHeight')
 		};
 	};
 
