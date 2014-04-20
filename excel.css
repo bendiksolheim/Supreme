@@ -54,12 +54,12 @@ th {
 
 .editable {
 	border: 1px solid #f3f3f3;
+	outline: 0;
 	text-align: right;
 }
 
-.editable:focus {
+.editable.active {
 	background: #edbc76;
-	outline: 0;
 }
 
 /*=================*/

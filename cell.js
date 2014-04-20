@@ -16,6 +16,7 @@
 		this.x = x;
 		this.value = value;
 		this.parent = parent;
+		this.editMode = false;
 		this.element = this._createElement();
 	}
 
@@ -23,8 +24,8 @@
 		var td = document.createElement('td');
 		td.className = 'editable';
 		td.tabIndex = '-1';
+		td.addEventListener('mousedown', this, false);
 		td.addEventListener('dblclick', this, false);
-		td.addEventListener('focusout', this, false);
 		td.addEventListener('change', this, false);
 		td.addEventListener('keydown', this, false);
 		return td;
@@ -32,14 +33,14 @@
 
 	Cell.prototype.handleEvent = function(event) {
 		switch (event.type) {
+			case 'mousedown':
+				this._focus();
+				break;
 			case 'dblclick':
 				this._edit();
 				break;
-			case 'focusout':
-				this._unfocus();
-				break;
 			case 'change':
-				this._change(this.element.innerHTML);
+				this.change(this.element.innerHTML);
 				break;
 			case 'keydown':
 				this._keydown(event);
@@ -47,17 +48,62 @@
 	};
 
 	Cell.prototype._edit = function(event) {
-		this.element.contentEditable = true;
+		this.editMode = true;
+		this.parent._edit(this);
+	};
+
+	Cell.prototype._doneEditing = function() {
+		this.parent._doneEditing(this);
+		this.editMode = false;
+	};
+
+	Cell.prototype._focus = function() {
+		if (this.element.classList.contains('active'))
+			return;
+
+		this.element.classList.add('active');
+		this.parent._setActive(this);
 		this.element.focus();
 	};
 
 	Cell.prototype._unfocus = function() {
-		this.element.contentEditable = false;
+		this.element.classList.remove('active');
 	};
 
-	Cell.prototype._change = function(value) {
+	Cell.prototype.change = function(value) {
 		this.value = value;
 		this.element.innerHTML = value;
+	};
+
+	/*Cell.prototype._toggleEdit = function(first_argument) {
+		if (this.editMode)
+			this._doneEditing();
+		else
+			this._edit();
+	};*/
+
+	Cell.prototype._keydown = function(event) {
+		var keyCode = event.keyCode;
+		switch (keyCode) {
+			case RETURN:
+				this._edit();
+				break;
+			case ARROW_LEFT.code:
+			case ARROW_UP.code:
+			case ARROW_RIGHT.code:
+			case ARROW_DOWN.code:
+				this.parent.shift(this, ARROW_KEYS[keyCode]);
+				break;
+		}
+	};
+
+	Cell.prototype.bounds = function() {
+		return {
+			x: this.element.offsetLeft,
+			y: this.element.offsetTop,
+			width: this.element.offsetWidth,
+			height: this.element.offsetHeight
+		};
 	};
 
 	Cell.prototype.focus = function() {
@@ -71,21 +117,6 @@
 			'cancelable': true
 		});
 		this.element.dispatchEvent(event);
-	};
-
-	Cell.prototype._keydown = function(event) {
-		var keyCode = event.keyCode;
-		switch (keyCode) {
-			case RETURN:
-				this.element.blur();
-				break;
-			case ARROW_LEFT.code:
-			case ARROW_UP.code:
-			case ARROW_RIGHT.code:
-			case ARROW_DOWN.code:
-				this.parent.shift(this, ARROW_KEYS[keyCode]);
-				break;
-		}
 	};
 
 	window.Cell = Cell;

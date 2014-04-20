@@ -1,0 +1,57 @@
+(function(window) {
+	function px(value) {
+		return value + 'px';
+	}
+
+	function Input() {
+		this.element = this._createElement();
+	}
+
+	Input.prototype._createElement = function() {
+		var input = document.createElement('input');
+		input.className = 'input';
+		input.style.position = 'absolute';
+		input.style.borderWidth = 0;
+		input.style.backgroundColor = 'transparent';
+		input.style.pointerEvents = 'none';
+		input.addEventListener('keydown', this, false);
+		document.body.appendChild(input);
+		return input;
+	};
+
+	Input.prototype.handleEvent = function(event) {
+		switch (event.type) {
+			case 'keydown':
+				this._keyDown(event);
+				break;
+		}
+	};
+
+	Input.prototype._keyDown = function(event) {
+		if (event.keyCode === 13)
+			this._doneEditing();
+	};
+
+	Input.prototype._moveTo = function(cellBounds) {
+		this.element.style.left = px(cellBounds.x);
+		this.element.style.top = px(cellBounds.y);
+		this.element.style.width = px(cellBounds.width);
+		this.element.style.height = px(cellBounds.height);
+	};
+
+	Input.prototype._edit = function(cell) {
+		this.cell = cell;
+		var element = this.element;
+		this._moveTo(cell.bounds());
+		this.element.focus();
+	};
+
+	Input.prototype._doneEditing = function(event) {
+		this.cell.change(this.element.value);
+		this.element.value = '';
+		this.element.blur();
+		this.cell.focus();
+	};
+
+	window.Input = Input;
+})(window);
