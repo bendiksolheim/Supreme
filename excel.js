@@ -24,12 +24,12 @@
 	};
 
 	Excel.prototype._createHeaders = function() {
-		var thead = new d('thead');
-		var tr = new d('tr');
-		var corner = new d('th.header.corner');
+		var thead = d('thead');
+		var tr = d('tr');
+		var corner = d('th.header.corner');
 		tr.append(corner);
 		for (var col = 0; col < this.width; col++) {
-			var th = new d('th.header.col-header');
+			var th = d('th.header.col-header');
 			th.html(String.fromCharCode(col + 65));
 			tr.append(th);
 		}
@@ -38,10 +38,10 @@
 	};
 
 	Excel.prototype._createBody = function() {
-		var tbody = new d('tbody');
+		var tbody = d('tbody');
 		for (var col = 0; col < this.height; col++) {
-			var tr = new d('tr');
-			var rowHeader = new d('td.header.row-header');
+			var tr = d('tr');
+			var rowHeader = d('td.header.row-header');
 			rowHeader.html(col);
 			tr.append(rowHeader);
 			for (var row = 0; row < this.width; row++) {
@@ -75,7 +75,7 @@
 		this.input._doneEditing(cell);
 	};
 
-	var excel = new Excel(new d('.table'), 10, 10);
+	var excel = new Excel(d('.table'), 10, 10);
 	window.Excel = Excel;
 	window.excel = excel;
 

@@ -9,6 +9,10 @@
 		return typeof v === 'undefined';
 	}
 
+	function _d(element) {
+		return new d(element);
+	}
+
 	function d(element) {
 		if (element[0] === '.') {
 			this.el = document.querySelector(element);
@@ -96,5 +100,5 @@
 		this.el[prop] = val;
 	};
 
-	window.d = d;
+	window.d = _d;
 })(window);

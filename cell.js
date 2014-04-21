@@ -20,7 +20,7 @@
 	}
 
 	Cell.prototype._createElement = function() {
-		var td = new d('td.editable');
+		var td = d('td.editable');
 		td.domProp('tabIndex', '-1');
 		td.on('keydown mousedown dblclick change', this, false);
 		return td;

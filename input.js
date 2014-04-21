@@ -8,10 +8,10 @@
 	}
 
 	Input.prototype._createElement = function() {
-		var input = new d('input.input');
+		var input = d('input.input');
+		input.style('display', 'none');
 		input.style('position', 'absolute');
 		input.style('borderWidth', 0);
-		//input.style('backgroundColor', 'transparent');
 		input.style('pointerEvents', 'none');
 		input.on('keydown', this, false);
 		document.body.appendChild(input.get());
