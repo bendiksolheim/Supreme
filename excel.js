@@ -61,10 +61,10 @@
 		this.model[y][x]._focus();
 	};
 
-	Excel.prototype._setActive = function(cell) {
-		if (this.activeCell) this.activeCell._unfocus();
+	Excel.prototype._setFocused = function(cell) {
+		if (this.focusedCell) this.focusedCell._unfocus();
 
-		this.activeCell = cell;
+		this.focusedCell = cell;
 	};
 
 	Excel.prototype._edit = function(cell) {

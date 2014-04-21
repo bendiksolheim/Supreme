@@ -16,7 +16,6 @@
 		this.x = x;
 		this.value = value;
 		this.parent = parent;
-		this.editMode = false;
 		this.element = this._createElement();
 	}
 
@@ -33,7 +32,7 @@
 				this._focus();
 				break;
 			case 'dblclick':
-				this._edit();
+				this.parent._edit();
 				break;
 			case 'change':
 				this.change(this.element.html());
@@ -43,22 +42,12 @@
 		}
 	};
 
-	Cell.prototype._edit = function(event) {
-		this.editMode = true;
-		this.parent._edit(this);
-	};
-
-	Cell.prototype._doneEditing = function() {
-		this.parent._doneEditing(this);
-		this.editMode = false;
-	};
-
 	Cell.prototype._focus = function() {
 		if (this.element.hasClass('active'))
 			return;
 
 		this.element.addClass('active');
-		this.parent._setActive(this);
+		this.parent._setFocused(this);
 		this.element.focus();
 	};
 
@@ -71,18 +60,11 @@
 		this.element.html(value);
 	};
 
-	/*Cell.prototype._toggleEdit = function(first_argument) {
-		if (this.editMode)
-			this._doneEditing();
-		else
-			this._edit();
-	};*/
-
 	Cell.prototype._keydown = function(event) {
 		var keyCode = event.keyCode;
 		switch (keyCode) {
 			case RETURN:
-				this._edit();
+				this.parent._edit(this);
 				break;
 			case ARROW_LEFT.code:
 			case ARROW_UP.code:
@@ -90,6 +72,8 @@
 			case ARROW_DOWN.code:
 				this.parent.shift(this, ARROW_KEYS[keyCode]);
 				break;
+			default:
+				console.log("lol");
 		}
 	};
 
