@@ -11,7 +11,7 @@
 		var input = new d('input.input');
 		input.style('position', 'absolute');
 		input.style('borderWidth', 0);
-		input.style('backgroundColor', 'transparent');
+		//input.style('backgroundColor', 'transparent');
 		input.style('pointerEvents', 'none');
 		input.on('keydown', this, false);
 		document.body.appendChild(input.get());
@@ -42,15 +42,28 @@
 	Input.prototype._edit = function(cell) {
 		this.cell = cell;
 		var element = this.element;
+		element.value(cell.value);
 		this._moveTo(cell.bounds());
+		this._show();
 		this.element.focus();
 	};
 
 	Input.prototype._doneEditing = function(event) {
 		this.cell.change(this.element.value());
+		this._hide();
 		this.element.value('');
 		this.element.blur();
 		this.cell.focus();
+	};
+
+	Input.prototype._show = function() {
+		var background = this.cell.element.css('backgroundColor');
+		this.element.style('backgroundColor', background);
+		this.element.style('display', 'block');
+	};
+
+	Input.prototype._hide = function() {
+		this.element.style('display', 'none');
 	};
 
 	window.Input = Input;

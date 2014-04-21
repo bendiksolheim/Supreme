@@ -55,6 +55,10 @@
 		this.el.style[attr] = value;
 	};
 
+	d.prototype.css = function(attr) {
+		return window.getComputedStyle(this.el)[attr];
+	}
+
 	d.prototype.hasClass = function(c) {
 		return this.el.classList.contains(c);
 	};
