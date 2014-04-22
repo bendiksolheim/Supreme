@@ -1,4 +1,4 @@
-(function(window) {
+(function(Supreme) {
 	var RETURN = 13;
 	var ARROW_LEFT = {code: 37, dx: -1, dy: 0};
 	var ARROW_UP = {code: 38, dx: 0, dy: -1};
@@ -100,5 +100,5 @@
 		this.element.dispatchEvent(event);
 	};
 
-	window.Cell = Cell;
-})(window);
+	Supreme.Cell = Cell;
+})(window.Supreme = window.Supreme || {});

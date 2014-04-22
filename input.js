@@ -1,4 +1,4 @@
-(function(window) {
+(function(Supreme) {
 	function px(value) {
 		return value + 'px';
 	}
@@ -66,5 +66,5 @@
 		this.element.style('display', 'none');
 	};
 
-	window.Input = Input;
-})(window);
+	Supreme.Input = Input;
+})(window.Supreme = window.Supreme || {});

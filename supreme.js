@@ -1,21 +1,21 @@
-(function(window) {
+(function(Supreme) {
 
-	function Excel(table, width, height) {
+	function App(table, width, height) {
 		this.table = table;
 		this.width = width;
 		this.height = height;
 		this.model = this._createModel(width, height);
 		this._createHeaders();
 		this._createBody();
-		this.input = new Input();
+		this.input = new Supreme.Input();
 	}
 
-	Excel.prototype._createModel = function(width, height) {
+	App.prototype._createModel = function(width, height) {
 		var model = [];
 		for (var y = 0; y < height; y++) {
 			var row = [];
 			for (var x = 0; x < width; x++) {
-				row.push(new Cell(y, x, '', this));
+				row.push(new Supreme.Cell(y, x, '', this));
 			}
 			model.push(row);
 		}
@@ -23,7 +23,7 @@
 		return model;
 	};
 
-	Excel.prototype._createHeaders = function() {
+	App.prototype._createHeaders = function() {
 		var thead = d('thead');
 		var tr = d('tr');
 		var corner = d('th.header.corner');
@@ -37,7 +37,7 @@
 		this.table.append(thead);
 	};
 
-	Excel.prototype._createBody = function() {
+	App.prototype._createBody = function() {
 		var tbody = d('tbody');
 		for (var col = 0; col < this.height; col++) {
 			var tr = d('tr');
@@ -52,7 +52,7 @@
 		this.table.append(tbody);
 	};
 
-	Excel.prototype.shift = function(cell, direction) {
+	App.prototype.shift = function(cell, direction) {
 		var x = cell.x + direction.dx;
 		var y = cell.y + direction.dy;
 		if (x < 0 || y < 0 || x >= this.width || y >= this.height)
@@ -61,22 +61,20 @@
 		this.model[y][x]._focus();
 	};
 
-	Excel.prototype._setFocused = function(cell) {
+	App.prototype._setFocused = function(cell) {
 		if (this.focusedCell) this.focusedCell._unfocus();
 
 		this.focusedCell = cell;
 	};
 
-	Excel.prototype._edit = function(cell) {
+	App.prototype._edit = function(cell) {
 		this.input._edit(cell);
 	};
 
-	Excel.prototype._doneEditing = function(cell) {
+	App.prototype._doneEditing = function(cell) {
 		this.input._doneEditing(cell);
 	};
 
-	var excel = new Excel(d('.table'), 10, 10);
-	window.Excel = Excel;
-	window.excel = excel;
+	Supreme.App = App;
 
-})(window);
+})(window.Supreme = window.Supreme || {});
