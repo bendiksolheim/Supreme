@@ -48,7 +48,7 @@
 		this.element.focus();
 	};
 
-	Input.prototype._doneEditing = function(event) {
+	Input.prototype._doneEditing = function() {
 		this.cell.change(this.element.value());
 		this._hide();
 		this.element.value('');

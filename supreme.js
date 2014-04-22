@@ -16,33 +16,16 @@
 		return String.fromCharCode(n + 65);
 	}
 
-	function fromCharacter(c) {
-		return c.charCodeAt() - 65;
-	}
-
 	function App(table, width, height) {
 		this.table = table;
 		this.width = width;
 		this.height = height;
-		this.model = this._createModel(width, height);
+		this.model = new Supreme.Model(this, width, height);
 		this._createHeaders();
 		this._createBody();
 		this.input = new Supreme.Input();
 		this.tbody.focus();
 	}
-
-	App.prototype._createModel = function(width, height) {
-		var model = [];
-		for (var y = 0; y < height; y++) {
-			var row = [];
-			for (var x = 0; x < width; x++) {
-				row.push(new Supreme.Cell(y, x, '', this));
-			}
-			model.push(row);
-		}
-
-		return model;
-	};
 
 	App.prototype._createHeaders = function() {
 		var thead = d('thead');
@@ -63,13 +46,13 @@
 		tbody.on('keydown', this, false);
 		tbody.domProp('tabIndex', '-1');
 		this.tbody = tbody;
-		for (var col = 0; col < this.height; col++) {
+		for (var row = 0; row < this.height; row++) {
 			var tr = d('tr');
 			var rowHeader = d('td.header.row-header');
-			rowHeader.html(col);
+			rowHeader.html(row);
 			tr.append(rowHeader);
-			for (var row = 0; row < this.width; row++) {
-				tr.append(this.model[col][row].element);
+			for (var col = 0; col < this.width; col++) {
+				tr.append(this.model.get(col, row).element);
 			}
 			tbody.append(tr);
 		}
@@ -100,13 +83,14 @@
 
 	App.prototype.shift = function(cell, direction) {
 		if (d.isUndefined(cell))
-			return this.model[0][0]._focus();
-		var x = cell.x + direction.dx;
-		var y = cell.y + direction.dy;
-		if (x < 0 || y < 0 || x >= this.width || y >= this.height)
+			return this.model.get(0, 0)._focus();
+
+		var col = cell.col + direction.dx;
+		var row = cell.row + direction.dy;
+		if (col < 0 || row < 0 || col >= this.width || row >= this.height)
 			return;
 
-		this.model[y][x]._focus();
+		this.model.get(col, row)._focus();
 	};
 
 	App.prototype._setFocused = function(cell) {
@@ -120,19 +104,12 @@
 	};
 
 	App.prototype._doneEditing = function(cell) {
-		this.input._doneEditing(cell);
+		this.input._doneEditing();
 	};
-
-	App.prototype._get = function(cellIndex) {
-		var x = fromCharacter(cellIndex[0]);
-		var y = parseInt(cellIndex.substr(1), 10);
-		return this.model[y][x].value();
-	};
-
 	App.prototype._evaluate = function(val) {
 		var parts = val.split(' ');
-		parts[0] = this._get(parts[0]);
-		parts[2] = this._get(parts[2]);
+		parts[0] = this.model.get(parts[0][0], parts[0][1]).value();
+		parts[2] = this.model.get(parts[2][0], parts[2][1]).value();
 		var expression = parts.join(' ');
 		return eval(expression);
 	};

@@ -4,9 +4,9 @@
 		return val[0] === '=';
 	}
 
-	function Cell(y, x, value, parent) {
-		this.y = y;
-		this.x = x;
+	function Cell(col, row, value, parent) {
+		this.col = col;
+		this.row = row;
 		this.displayValue = value;
 		this.rawValue = value;
 		this.parent = parent;
@@ -31,8 +31,8 @@
 			case 'change':
 				this.change(this.element.html());
 				break;
-			case 'keydown':
-				this._keydown(event);
+			default:
+				debugger;
 		}
 	};
 
@@ -77,15 +77,6 @@
 
 	Cell.prototype.focus = function() {
 		this.element.focus();
-	};
-
-	Cell.prototype.activate = function() {
-		var event = new MouseEvent('dblclick', {
-			'view': window,
-			'bubbles': true,
-			'cancelable': true
-		});
-		this.element.dispatchEvent(event);
 	};
 
 	Supreme.Cell = Cell;
