@@ -21,43 +21,10 @@
 		this.width = width;
 		this.height = height;
 		this.model = new Supreme.Model(this, width, height);
-		this._createHeaders();
-		this._createBody();
+		this.view = new Supreme.TableView(this, table, this.model);
 		this.input = new Supreme.Input();
-		this.tbody.focus();
+		this.view.focus();
 	}
-
-	App.prototype._createHeaders = function() {
-		var thead = d('thead');
-		var tr = d('tr');
-		var corner = d('th.header.corner');
-		tr.append(corner);
-		for (var col = 0; col < this.width; col++) {
-			var th = d('th.header.col-header');
-			th.html(String.fromCharCode(col + 65));
-			tr.append(th);
-		}
-		thead.append(tr);
-		this.table.append(thead);
-	};
-
-	App.prototype._createBody = function() {
-		var tbody = d('tbody');
-		tbody.on('keydown', this, false);
-		tbody.domProp('tabIndex', '-1');
-		this.tbody = tbody;
-		for (var row = 0; row < this.height; row++) {
-			var tr = d('tr');
-			var rowHeader = d('td.header.row-header');
-			rowHeader.html(row);
-			tr.append(rowHeader);
-			for (var col = 0; col < this.width; col++) {
-				tr.append(this.model.get(col, row).element);
-			}
-			tbody.append(tr);
-		}
-		this.table.append(tbody);
-	};
 
 	App.prototype.handleEvent = function(event) {
 		switch (event.type) {
@@ -82,6 +49,7 @@
 	};
 
 	App.prototype.shift = function(cell, direction) {
+		console.log(cell);
 		if (d.isUndefined(cell))
 			return this.model.get(0, 0)._focus();
 
@@ -106,10 +74,11 @@
 	App.prototype._doneEditing = function(cell) {
 		this.input._doneEditing();
 	};
+
 	App.prototype._evaluate = function(val) {
 		var parts = val.split(' ');
-		parts[0] = this.model.get(parts[0][0], parts[0][1]).value();
-		parts[2] = this.model.get(parts[2][0], parts[2][1]).value();
+		parts[0] = this.model.get(parts[0]).value();
+		parts[2] = this.model.get(parts[2]).value();
 		var expression = parts.join(' ');
 		return eval(expression);
 	};
