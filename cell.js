@@ -15,6 +15,7 @@
 		this.y = y;
 		this.x = x;
 		this.value = value;
+		this.rawValue = value;
 		this.parent = parent;
 		this.element = this._createElement();
 	}
