@@ -1,15 +1,8 @@
 (function(Supreme) {
-	var RETURN = 13;
-	var ARROW_LEFT = {code: 37, dx: -1, dy: 0};
-	var ARROW_UP = {code: 38, dx: 0, dy: -1};
-	var ARROW_RIGHT = {code: 39, dx: 1, dy: 0};
-	var ARROW_DOWN = {code: 40, dx: 0, dy: 1};
-	var ARROW_KEYS = {
-		'37': ARROW_LEFT,
-		'38': ARROW_UP,
-		'39': ARROW_RIGHT,
-		'40': ARROW_DOWN
-	};
+
+	function isExpression(val) {
+		return val[0] === '=';
+	}
 
 	function Cell(y, x, value, parent) {
 		this.y = y;
@@ -23,7 +16,7 @@
 	Cell.prototype._createElement = function() {
 		var td = d('td.editable');
 		td.domProp('tabIndex', '-1');
-		td.on('keydown mousedown dblclick change', this, false);
+		td.on('mousedown dblclick change', this, false);
 		return td;
 	};
 
@@ -57,7 +50,8 @@
 	};
 
 	Cell.prototype._parse = function(val) {
-		if (val[0] === '=') return this.parent._evaluate(val.substr(1));
+		if (isExpression(val))
+			return this.parent._evaluate(val.substr(1));
 
 		return val;
 	};
@@ -66,23 +60,6 @@
 		this.rawValue = value;
 		this.displayValue = this._parse(value);
 		this.element.html(this.displayValue);
-	};
-
-	Cell.prototype._keydown = function(event) {
-		var keyCode = event.keyCode;
-		switch (keyCode) {
-			case RETURN:
-				this.parent._edit(this);
-				break;
-			case ARROW_LEFT.code:
-			case ARROW_UP.code:
-			case ARROW_RIGHT.code:
-			case ARROW_DOWN.code:
-				this.parent.shift(this, ARROW_KEYS[keyCode]);
-				break;
-			default:
-				console.log("lol");
-		}
 	};
 
 	Cell.prototype.value = function(value) {

@@ -18,6 +18,10 @@ table {
 	width: 100%;
 }
 
+tbody {
+	outline: 0;
+}
+
 td, th {
 	padding-bottom: 5px;
 	padding-top: 5px;

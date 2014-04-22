@@ -100,5 +100,8 @@
 		this.el[prop] = val;
 	};
 
+	_d.isUndefined = isUndefined;
+	_d.each = each;
+
 	window.d = _d;
 })(window);

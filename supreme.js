@@ -1,5 +1,17 @@
 (function(Supreme) {
 
+	var RETURN = 13;
+	var ARROW_LEFT = {code: 37, dx: -1, dy: 0};
+	var ARROW_UP = {code: 38, dx: 0, dy: -1};
+	var ARROW_RIGHT = {code: 39, dx: 1, dy: 0};
+	var ARROW_DOWN = {code: 40, dx: 0, dy: 1};
+	var ARROW_KEYS = {
+		'37': ARROW_LEFT,
+		'38': ARROW_UP,
+		'39': ARROW_RIGHT,
+		'40': ARROW_DOWN
+	};
+
 	function fromNumber(n) {
 		return String.fromCharCode(n + 65);
 	}
@@ -16,6 +28,7 @@
 		this._createHeaders();
 		this._createBody();
 		this.input = new Supreme.Input();
+		this.tbody.focus();
 	}
 
 	App.prototype._createModel = function(width, height) {
@@ -47,6 +60,9 @@
 
 	App.prototype._createBody = function() {
 		var tbody = d('tbody');
+		tbody.on('keydown', this, false);
+		tbody.domProp('tabIndex', '-1');
+		this.tbody = tbody;
 		for (var col = 0; col < this.height; col++) {
 			var tr = d('tr');
 			var rowHeader = d('td.header.row-header');
@@ -60,7 +76,31 @@
 		this.table.append(tbody);
 	};
 
+	App.prototype.handleEvent = function(event) {
+		switch (event.type) {
+			case 'keydown':
+				this._keydown(event.keyCode);
+				break;
+		}
+	};
+
+	App.prototype._keydown = function(code) {
+		switch (code) {
+			case RETURN:
+				this._edit(this.focusedCell);
+				break;
+			case ARROW_LEFT.code:
+			case ARROW_UP.code:
+			case ARROW_RIGHT.code:
+			case ARROW_DOWN.code:
+				this.shift(this.focusedCell, ARROW_KEYS[code]);
+				break;
+		}
+	};
+
 	App.prototype.shift = function(cell, direction) {
+		if (d.isUndefined(cell))
+			return this.model[0][0]._focus();
 		var x = cell.x + direction.dx;
 		var y = cell.y + direction.dy;
 		if (x < 0 || y < 0 || x >= this.width || y >= this.height)
