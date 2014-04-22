@@ -32,6 +32,10 @@
 	};
 
 	Model.prototype.get = function(col, row) {
+		if (col.length > 1) {
+			row = col[1];
+			col = col[0];
+		}
 		col = normalize(col);
 		row = normalize(row);
 		return this.model[row][col];
