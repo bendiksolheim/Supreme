@@ -42,7 +42,7 @@
 	Input.prototype._edit = function(cell) {
 		this.cell = cell;
 		var element = this.element;
-		element.value(cell.value);
+		element.value(cell.value());
 		this._moveTo(cell.bounds());
 		this._show();
 		this.element.focus();

@@ -14,7 +14,7 @@
 	function Cell(y, x, value, parent) {
 		this.y = y;
 		this.x = x;
-		this.value = value;
+		this.displayValue = value;
 		this.rawValue = value;
 		this.parent = parent;
 		this.element = this._createElement();
@@ -33,7 +33,7 @@
 				this._focus();
 				break;
 			case 'dblclick':
-				this.parent._edit();
+				this.parent._edit(this);
 				break;
 			case 'change':
 				this.change(this.element.html());
@@ -56,9 +56,16 @@
 		this.element.removeClass('active');
 	};
 
+	Cell.prototype._parse = function(val) {
+		if (val[0] === '=') return this.parent._evaluate(val.substr(1));
+
+		return val;
+	};
+
 	Cell.prototype.change = function(value) {
-		this.value = value;
-		this.element.html(value);
+		this.rawValue = value;
+		this.displayValue = this._parse(value);
+		this.element.html(this.displayValue);
 	};
 
 	Cell.prototype._keydown = function(event) {
@@ -76,6 +83,10 @@
 			default:
 				console.log("lol");
 		}
+	};
+
+	Cell.prototype.value = function(value) {
+		return this.rawValue;
 	};
 
 	Cell.prototype.bounds = function() {

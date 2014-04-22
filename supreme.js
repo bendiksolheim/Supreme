@@ -1,5 +1,13 @@
 (function(Supreme) {
 
+	function fromNumber(n) {
+		return String.fromCharCode(n + 65);
+	}
+
+	function fromCharacter(c) {
+		return c.charCodeAt() - 65;
+	}
+
 	function App(table, width, height) {
 		this.table = table;
 		this.width = width;
@@ -73,6 +81,20 @@
 
 	App.prototype._doneEditing = function(cell) {
 		this.input._doneEditing(cell);
+	};
+
+	App.prototype._get = function(cellIndex) {
+		var x = fromCharacter(cellIndex[0]);
+		var y = parseInt(cellIndex.substr(1), 10);
+		return this.model[y][x].value();
+	};
+
+	App.prototype._evaluate = function(val) {
+		var parts = val.split(' ');
+		parts[0] = this._get(parts[0]);
+		parts[2] = this._get(parts[2]);
+		var expression = parts.join(' ');
+		return eval(expression);
 	};
 
 	Supreme.App = App;
