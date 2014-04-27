@@ -23,6 +23,7 @@
 		this.model = new Supreme.Model(this, width, height);
 		this.view = new Supreme.TableView(this, table, this.model);
 		this.input = new Supreme.Input();
+		this.env = new diy.Environment();
 		this.view.focus();
 	}
 
@@ -75,12 +76,22 @@
 		this.input._doneEditing();
 	};
 
-	App.prototype._evaluate = function(val) {
+	/*App.prototype._evaluate = function(val) {
 		var parts = val.split(' ');
 		parts[0] = this.model.get(parts[0]).value();
 		parts[2] = this.model.get(parts[2]).value();
 		var expression = parts.join(' ');
 		return eval(expression);
+	};*/
+
+	App.prototype._parse = function(val) {
+		var parsed = diy.Parser.parse(val);
+		return parsed;
+	};
+
+	App.prototype._evaluate = function(ast) {
+		var val = diy.Evaluator.evaluate(ast, this.env);
+		return val;
 	};
 
 	Supreme.App = App;
