@@ -4,7 +4,7 @@
 	}
 
 	function Input() {
-		this.element = this._createElement();
+		this._el = this._createElement();
 	}
 
 	Input.prototype._createElement = function() {
@@ -32,7 +32,7 @@
 	};
 
 	Input.prototype._moveTo = function(cellBounds) {
-		var element = this.element;
+		var element = this._el;
 		element.style('left', px(cellBounds.x));
 		element.style('top', px(cellBounds.y));
 		element.style('width', px(cellBounds.width));
@@ -41,29 +41,29 @@
 
 	Input.prototype._edit = function(cell) {
 		this.cell = cell;
-		var element = this.element;
+		var element = this._el;
 		element.value(cell.value());
 		this._moveTo(cell.bounds());
 		this._show();
-		this.element.focus();
+		this._el.focus();
 	};
 
 	Input.prototype._doneEditing = function() {
-		this.cell.change(this.element.value());
+		this.cell.change(this._el.value());
 		this._hide();
-		this.element.value('');
-		this.element.blur();
+		this._el.value('');
+		this._el.blur();
 		this.cell.focus();
 	};
 
 	Input.prototype._show = function() {
-		var background = this.cell.element.css('backgroundColor');
-		this.element.style('backgroundColor', background);
-		this.element.style('display', 'block');
+		var background = this.cell.el().css('backgroundColor');
+		this._el.style('backgroundColor', background);
+		this._el.style('display', 'block');
 	};
 
 	Input.prototype._hide = function() {
-		this.element.style('display', 'none');
+		this._el.style('display', 'none');
 	};
 
 	Supreme.Input = Input;

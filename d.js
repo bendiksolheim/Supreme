@@ -15,7 +15,7 @@
 
 	function d(element) {
 		if (element[0] === '.') {
-			this.el = document.querySelector(element);
+			this._el = document.querySelector(element);
 			return this;
 		}
 
@@ -24,12 +24,12 @@
 		each(element.slice(1), function(c) {
 			el.classList.add(c);
 		});
-		this.el = el;
+		this._el = el;
 		return this;
 	}
 
 	d.prototype.get = function() {
-		return this.el;
+		return this._el;
 	};
 
 	d.prototype.on = function(eventList, listener, useCapture) {
@@ -38,66 +38,66 @@
 
 		var self = this;
 		each(eventList, function(ev) {
-			self.el.addEventListener(ev, listener, useCapture);
+			self._el.addEventListener(ev, listener, useCapture);
 		});
 	};
 
 	d.prototype.append = function(child) {
-		this.el.appendChild(child.get());
+		this._el.appendChild(child.get());
 	};
 
 	d.prototype.html = function(html) {
 		if (html !== null) {
-			this.el.innerHTML = html;
+			this._el.innerHTML = html;
 			return;
 		}
 
-		return this.el.innerHTML;
+		return this._el.innerHTML;
 	};
 
 	d.prototype.style = function(attr, value) {
-		this.el.style[attr] = value;
+		this._el.style[attr] = value;
 	};
 
 	d.prototype.css = function(attr) {
-		return window.getComputedStyle(this.el)[attr];
+		return window.getComputedStyle(this._el)[attr];
 	}
 
 	d.prototype.hasClass = function(c) {
-		return this.el.classList.contains(c);
+		return this._el.classList.contains(c);
 	};
 
 	d.prototype.addClass = function(c) {
-		this.el.classList.add(c);
+		this._el.classList.add(c);
 	};
 
 	d.prototype.removeClass = function(c) {
-		this.el.classList.remove(c);
+		this._el.classList.remove(c);
 	};
 
 	d.prototype.focus = function() {
-		this.el.focus();
+		this._el.focus();
 	};
 
 	d.prototype.blur = function() {
-		this.el.blur();
+		this._el.blur();
 	};
 
 	d.prototype.value = function(val) {
 		if (!isUndefined(val)) {
-			this.el.value = val;
+			this._el.value = val;
 			return;
 		}
 
-		return this.el.value;
+		return this._el.value;
 	};
 
 	d.prototype.domProp = function(prop, val) {
 		if (isUndefined(val)) {
-			return this.el[prop];
+			return this._el[prop];
 		}
 
-		this.el[prop] = val;
+		this._el[prop] = val;
 	};
 
 	_d.isUndefined = isUndefined;

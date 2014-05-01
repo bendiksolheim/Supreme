@@ -12,10 +12,10 @@
 	}
 
 	function Model(app, cols, rows) {
-		this.app = app;
-		this.cols = cols;
-		this.rows = rows;
-		this.model = this._create(cols, rows);
+		this._app = app;
+		this._cols = cols;
+		this._rows = rows;
+		this._model = this._create(cols, rows);
 	}
 
 	Model.prototype._create = function(cols, rows) {
@@ -23,7 +23,7 @@
 		for (var row = 0; row < rows; row++) {
 			var _row = [];
 			for (var col = 0; col < cols; col++) {
-				_row.push(new Supreme.Cell(col, row, '', this.app));
+				_row.push(new Supreme.Cell(col, row, '', this._app));
 			}
 			model.push(_row);
 		}
@@ -38,7 +38,15 @@
 		}
 		col = normalize(col);
 		row = normalize(row);
-		return this.model[row][col];
+		return this._model[row][col];
+	};
+
+	Model.prototype.rows = function() {
+		return this._rows;
+	};
+
+	Model.prototype.cols = function() {
+		return this._cols;
 	};
 
 	Supreme.Model = Model;

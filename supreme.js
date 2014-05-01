@@ -17,14 +17,14 @@
 	}
 
 	function App(table, width, height) {
-		this.table = table;
-		this.width = width;
-		this.height = height;
-		this.model = new Supreme.Model(this, width, height);
-		this.view = new Supreme.TableView(this, table, this.model);
-		this.input = new Supreme.Input();
-		this.env = new diy.Environment();
-		this.view.focus();
+		this._table = table;
+		this._width = width;
+		this._height = height;
+		this._model = new Supreme.Model(this, width, height);
+		this._view = new Supreme.TableView(this, table, this._model);
+		this._input = new Supreme.Input();
+		this._env = new diy.Environment();
+		this._view.focus();
 
 		// focus first element
 		this.shift();
@@ -54,14 +54,14 @@
 
 	App.prototype.shift = function(cell, direction) {
 		if (d.isUndefined(cell))
-			return this.model.get(0, 0)._focus();
+			return this._model.get(0, 0)._focus();
 
-		var col = cell.col + direction.dx;
-		var row = cell.row + direction.dy;
-		if (col < 0 || row < 0 || col >= this.width || row >= this.height)
+		var col = cell._col + direction.dx;
+		var row = cell._row + direction.dy;
+		if (col < 0 || row < 0 || col >= this._width || row >= this._height)
 			return;
 
-		this.model.get(col, row)._focus();
+		this._model.get(col, row)._focus();
 	};
 
 	App.prototype._setFocused = function(cell) {
@@ -71,11 +71,11 @@
 	};
 
 	App.prototype._edit = function(cell) {
-		this.input._edit(cell);
+		this._input._edit(cell);
 	};
 
 	App.prototype._doneEditing = function(cell) {
-		this.input._doneEditing();
+		this._input._doneEditing();
 	};
 
 	App.prototype._parse = function(val) {
@@ -84,7 +84,7 @@
 	};
 
 	App.prototype._evaluate = function(ast) {
-		var val = diy.Evaluator.evaluate(ast, this.env);
+		var val = diy.Evaluator.evaluate(ast, this._env);
 		return val;
 	};
 

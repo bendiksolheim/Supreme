@@ -5,13 +5,13 @@
 	}
 
 	function Cell(col, row, value, parent) {
-		this.col = col;
-		this.row = row;
-		this.displayValue = value;
-		this.rawValue = value;
-		this.parsedValue = '';
-		this.parent = parent;
-		this.element = this._createElement();
+		this._col = col;
+		this._row = row;
+		this._displayValue = value;
+		this._rawValue = value;
+		this._parsedValue = '';
+		this._parent = parent;
+		this._el = this._createElement();
 	}
 
 	Cell.prototype._createElement = function() {
@@ -27,10 +27,10 @@
 				this._focus();
 				break;
 			case 'dblclick':
-				this.parent._edit(this);
+				this._parent._edit(this);
 				break;
 			case 'change':
-				this.change(this.element.html());
+				this.change(this._el.html());
 				break;
 			default:
 				debugger;
@@ -38,47 +38,51 @@
 	};
 
 	Cell.prototype._focus = function() {
-		if (this.element.hasClass('active'))
+		if (this._el.hasClass('active'))
 			return;
 
-		this.element.addClass('active');
-		this.parent._setFocused(this);
-		this.element.focus();
+		this._el.addClass('active');
+		this._parent._setFocused(this);
+		this._el.focus();
 	};
 
 	Cell.prototype._unfocus = function() {
-		this.element.removeClass('active');
+		this._el.removeClass('active');
 	};
 
 	Cell.prototype._parse = function(val) {
-		return this.parent._parse(val);
+		return this._parent._parse(val);
 	};
 
 	Cell.prototype.change = function(value) {
-		this.rawValue = value;
+		this._rawValue = value;
 		if (value[0] === '(') {
-			this.parsedValue = this._parse(value);
-			value = this.parent._evaluate(this.parsedValue);
+			this._parsedValue = this._parse(value);
+			value = this._parent._evaluate(this._parsedValue);
 		}
-		this.displayValue = value;
-		this.element.html(this.displayValue);
+		this._displayValue = value;
+		this._el.html(this._displayValue);
 	};
 
 	Cell.prototype.value = function(value) {
-		return this.rawValue;
+		return this._rawValue;
 	};
 
 	Cell.prototype.bounds = function() {
 		return {
-			x: this.element.domProp('offsetLeft'),
-			y: this.element.domProp('offsetTop'),
-			width: this.element.domProp('offsetWidth'),
-			height: this.element.domProp('offsetHeight')
+			x: this._el.domProp('offsetLeft'),
+			y: this._el.domProp('offsetTop'),
+			width: this._el.domProp('offsetWidth'),
+			height: this._el.domProp('offsetHeight')
 		};
 	};
 
 	Cell.prototype.focus = function() {
-		this.element.focus();
+		this._el.focus();
+	};
+
+	Cell.prototype.el = function() {
+		return this._el;
 	};
 
 	Supreme.Cell = Cell;
