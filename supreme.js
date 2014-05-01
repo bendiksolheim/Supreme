@@ -25,6 +25,9 @@
 		this.input = new Supreme.Input();
 		this.env = new diy.Environment();
 		this.view.focus();
+
+		// focus first element
+		this.shift();
 	}
 
 	App.prototype.handleEvent = function(event) {
@@ -50,7 +53,6 @@
 	};
 
 	App.prototype.shift = function(cell, direction) {
-		console.log(cell);
 		if (d.isUndefined(cell))
 			return this.model.get(0, 0)._focus();
 
@@ -75,14 +77,6 @@
 	App.prototype._doneEditing = function(cell) {
 		this.input._doneEditing();
 	};
-
-	/*App.prototype._evaluate = function(val) {
-		var parts = val.split(' ');
-		parts[0] = this.model.get(parts[0]).value();
-		parts[2] = this.model.get(parts[2]).value();
-		var expression = parts.join(' ');
-		return eval(expression);
-	};*/
 
 	App.prototype._parse = function(val) {
 		var parsed = diy.Parser.parse(val);
