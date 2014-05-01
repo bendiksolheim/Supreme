@@ -19,14 +19,12 @@
 	}
 
 	Model.prototype._create = function(cols, rows) {
-		var model = [];
-		for (var row = 0; row < rows; row++) {
-			var _row = [];
-			for (var col = 0; col < cols; col++) {
-				_row.push(new Supreme.Cell(col, row, '', this._app));
-			}
-			model.push(_row);
-		}
+		var app = this._app;
+		var model = f.range(rows).map(function(row) {
+			return f.range(cols).map(function(col) {
+				return new Supreme.Cell(col, row, '', app);
+			}).get();
+		}).get();
 
 		return model;
 	};

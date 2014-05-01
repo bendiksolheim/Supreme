@@ -15,9 +15,9 @@
 	}
 
 	Cell.prototype._createElement = function() {
-		var td = d('td.editable');
-		td.domProp('tabIndex', '-1');
-		td.on('mousedown dblclick change', this, false);
+		var td = d('td.cell.editable')
+			.domProp('tabIndex', '-1')
+			.on('mousedown dblclick change', this, false);
 		return td;
 	};
 

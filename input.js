@@ -5,65 +5,59 @@
 
 	function Input() {
 		this._el = this._createElement();
+		document.body.appendChild(this._el.get());
 	}
 
 	Input.prototype._createElement = function() {
-		var input = d('input.input');
-		input.style('display', 'none');
-		input.style('position', 'absolute');
-		input.style('borderWidth', 0);
-		input.style('pointerEvents', 'none');
-		input.on('keydown', this, false);
-		document.body.appendChild(input.get());
+		var input = d('input.input')
+			.style('display', 'none')
+			.style('position', 'absolute')
+			.style('borderWidth', 0)
+			.style('pointerEvents', 'non')
+			.on('keydown', this, false);
 		return input;
 	};
 
 	Input.prototype.handleEvent = function(event) {
 		switch (event.type) {
 			case 'keydown':
-				this._keyDown(event);
+				this._keyDown(event.keyCode);
 				break;
 		}
 	};
 
-	Input.prototype._keyDown = function(event) {
-		if (event.keyCode === 13)
+	Input.prototype._keyDown = function(keyCode) {
+		if (keyCode === 13)
 			this._doneEditing();
 	};
 
 	Input.prototype._moveTo = function(cellBounds) {
-		var element = this._el;
-		element.style('left', px(cellBounds.x));
-		element.style('top', px(cellBounds.y));
-		element.style('width', px(cellBounds.width));
-		element.style('height', px(cellBounds.height));
+		this._el
+			.style('left', px(cellBounds.x))
+			.style('top', px(cellBounds.y))
+			.style('width', px(cellBounds.width))
+			.style('height', px(cellBounds.height));
 	};
 
 	Input.prototype._edit = function(cell) {
 		this.cell = cell;
-		var element = this._el;
-		element.value(cell.value());
+		var background = this.cell.el().css('backgroundColor');
 		this._moveTo(cell.bounds());
-		this._show();
+		this._el
+			.value(cell.value())
+			.style('backgroundColor', background)
+			.style('display', 'block')
+			.focus();
 		this._el.focus();
 	};
 
 	Input.prototype._doneEditing = function() {
 		this.cell.change(this._el.value());
-		this._hide();
-		this._el.value('');
-		this._el.blur();
+		this._el
+			.style('display', 'none')
+			.value('')
+			.blur();
 		this.cell.focus();
-	};
-
-	Input.prototype._show = function() {
-		var background = this.cell.el().css('backgroundColor');
-		this._el.style('backgroundColor', background);
-		this._el.style('display', 'block');
-	};
-
-	Input.prototype._hide = function() {
-		this._el.style('display', 'none');
 	};
 
 	Supreme.Input = Input;

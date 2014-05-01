@@ -24,7 +24,6 @@
 		this._view = new Supreme.TableView(this, table, this._model);
 		this._input = new Supreme.Input();
 		this._env = new diy.Environment();
-		this._view.focus();
 
 		// focus first element
 		this.shift();
