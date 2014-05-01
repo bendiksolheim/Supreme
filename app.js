@@ -23,6 +23,7 @@
 		this._model = new Supreme.Model(this, width, height);
 		this._view = new Supreme.TableView(this, table, this._model);
 		this._input = new Supreme.Input();
+		this._focus = new Supreme.Focus();
 		this._env = new diy.Environment();
 
 		// focus first element

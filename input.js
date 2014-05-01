@@ -13,7 +13,7 @@
 			.style('display', 'none')
 			.style('position', 'absolute')
 			.style('borderWidth', 0)
-			.style('pointerEvents', 'non')
+			.style('pointerEvents', 'none')
 			.on('keydown', this, false);
 		return input;
 	};
