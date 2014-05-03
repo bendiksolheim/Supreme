@@ -23,11 +23,12 @@
 		this._model = new Supreme.Model(this, width, height);
 		this._view = new Supreme.TableView(this, table, this._model);
 		this._input = new Supreme.Input();
-		this._focus = new Supreme.Focus();
+		this._selection = new Supreme.Selection(this);
 		this._env = new diy.Environment();
+		d('html', true).on('keydown', this, false);
 
 		// focus first element
-		this.shift();
+		this._selection.select(this._model.get(0,0));
 	}
 
 	App.prototype.handleEvent = function(event) {

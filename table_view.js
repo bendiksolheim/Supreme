@@ -18,9 +18,7 @@
 	};
 
 	TableView.prototype._createBody = function(model) {
-		var tbody = d('tbody')
-			.domProp('tabIndex', '-1')
-			.on('keydown', this._app, false);
+		var tbody = d('tbody');
 
 		f.range(model.rows()).each(function(row) {
 			var tr = d('tr')
