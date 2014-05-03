@@ -1,0 +1,83 @@
+*, *:before, *:after {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+body {
+	background: white;
+	font-family: 'Helvetica Neue', Arial;
+	font-size: 14px;
+	margin: 0;
+	padding: 0;
+}
+
+table {
+	border-collapse: collapse;
+	table-layout: fixed;
+	width: 100%;
+}
+
+tbody {
+	outline: 0;
+}
+
+td, th {
+	padding-bottom: 5px;
+	padding-top: 5px;
+}
+
+th {
+	border-top: 0;
+}
+
+.header {
+	background: #25292a;
+	color: whitesmoke;
+	font-weight: normal;
+	font-size: 13px;
+	text-shadow: #373b3c 1px 1px;
+}
+
+.col-header {
+	border-right: 1px solid #373b3c;
+	border-bottom: 1px solid #373b3c;
+}
+
+.row-header {
+	border-bottom: 1px solid #373b3c;
+	border-right: 1px solid #373b3c;
+	text-align: center;
+}
+
+.corner {
+	border-right: 1px solid #373b3c;
+	border-bottom: 1px solid #373b3c;
+	width: 40px;
+}
+
+.cell {
+	background: #2f3436;
+	color: whitesmoke;
+}
+
+.editable {
+	border: 1px solid #373b3c;
+	outline: 0;
+	text-align: right;
+}
+
+.editable.active {
+	background: #3dafc7;
+}
+
+/*=================*/
+.test {
+    border: 1px solid black;
+    height: 20px;
+    width: 200px;
+}
+
+.test:focus {
+    background: red;
+}
