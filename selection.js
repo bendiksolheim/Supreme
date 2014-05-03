@@ -1,25 +1,49 @@
 (function(Supreme) {
 
+	function px(value) {
+		return value + 'px';
+	}
+
 	/*
 
-	Selection should handle all selection (/focus) logic, maybe including input.
+	Selection.js should handle all selection (/focus) logic, maybe including input.
 	Should probably consider moving input into this class
 
 	*/
 
-	function Focus() {
-		this._el = this._createElement();
-		document.body.appendChild(this._el.get());
+	function Selection(app) {
+		this._app = app;
+		this._el = d('div.selection');
+		this._background = d('div.background');
+		this._handle = d('div.handle');
+		this._selected = undefined;
+		document.body.appendChild(this._el.append(this._background.append(this._handle)).get());
 	}
 
-	Focus.prototype._createElement = function() {
-		var focus = d('div.focus')
-			/*.style('display', 'none')*/
-			.style('position', 'absolute')
-			.style('background', 'red');
-		return focus;
+	Selection.prototype.select = function(cell) {
+		this._selected = cell;
+		var bounds = cell.bounds();
+		this._el
+			.style('left', px(bounds.x))
+			.style('top', px(bounds.y))
+			.style('width', px(bounds.width + 1))
+			.style('height', px(bounds.height + 1));
 	};
 
-	Supreme.Focus = Focus;
+	Selection.prototype.shift = function(direction) {
+		if (d.isUndefined(this._selected)) {
+			log.error("Tried shifting without any previous selection set, selecting cell at (0,0)");
+			return this.select(this._app._model.get(0, 0));
+		}
+
+		var col = this._selected._col + direction.dx;
+		var row = this._selected._row + direction.dy;
+		if (col < 0 || row < 0 || col >= this._width || row >= this._height)
+			return;
+
+		this.select(this._app._model.get(col, row));
+	};
+
+	Supreme.Selection = Selection;
 
 })(window.Supreme = window.Supreme || {});

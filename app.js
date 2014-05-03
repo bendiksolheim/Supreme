@@ -48,9 +48,13 @@
 			case ARROW_UP.code:
 			case ARROW_RIGHT.code:
 			case ARROW_DOWN.code:
-				this.shift(this.focusedCell, ARROW_KEYS[code]);
+				this._selection.shift(ARROW_KEYS[code]);
 				break;
 		}
+	};
+
+	App.prototype.select = function(cell) {
+		this._selection.select(cell);
 	};
 
 	App.prototype.shift = function(cell, direction) {
@@ -62,7 +66,7 @@
 		if (col < 0 || row < 0 || col >= this._width || row >= this._height)
 			return;
 
-		this._model.get(col, row)._focus();
+		this._selection.select(this._model.get(col, row));
 	};
 
 	App.prototype._setFocused = function(cell) {

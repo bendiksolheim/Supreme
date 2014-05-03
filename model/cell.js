@@ -16,7 +16,6 @@
 
 	Cell.prototype._createElement = function() {
 		var td = d('td.cell.editable')
-			.domProp('tabIndex', '-1')
 			.on('mousedown dblclick change', this, false);
 		return td;
 	};
@@ -38,12 +37,12 @@
 	};
 
 	Cell.prototype._focus = function() {
-		if (this._el.hasClass('active'))
+		/*if (this._el.hasClass('active'))
 			return;
 
-		this._el.addClass('active');
-		this._parent._setFocused(this);
-		this._el.focus();
+		this._el.addClass('active');*/
+		this._parent.select(this);
+		//this._el.focus();
 	};
 
 	Cell.prototype._unfocus = function() {
@@ -75,10 +74,6 @@
 			width: this._el.domProp('offsetWidth'),
 			height: this._el.domProp('offsetHeight')
 		};
-	};
-
-	Cell.prototype.focus = function() {
-		this._el.focus();
 	};
 
 	Cell.prototype.el = function() {
