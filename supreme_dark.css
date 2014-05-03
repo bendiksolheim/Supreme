@@ -81,3 +81,30 @@ th {
 .test:focus {
     background: red;
 }
+
+/*---------------------
+	Focus
+---------------------*/
+
+.selection {
+	background: transparent;
+	border: 2px solid #3dafc7;
+	position: absolute;
+}
+
+.selection .background {
+	background: transparent;
+	height: 100%;
+	position: relative;
+	width: 100%;
+}
+
+.selection .handle {
+	background: #3dafc7;
+	border: 2px solid #2f3436;
+	bottom: -5px;
+	height: 8px;
+	position: absolute;
+	right: -5px;
+	width: 8px;
+}
