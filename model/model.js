@@ -1,5 +1,12 @@
 (function(Supreme) {
 
+	/*
+
+		The model is stored as a two dimensional array with rows first, then columns:
+		model[row][column]
+
+	*/
+
 	var CHARACTERS = /[A-Z]/;
 
 	function fromCharacter(c) {
@@ -25,11 +32,11 @@
 				return new Supreme.Cell(col, row, '', app);
 			}).get();
 		}).get();
-
+		console.log(model);
 		return model;
 	};
 
-	Model.prototype.get = function(col, row) {
+	Model.prototype.get = function(row, col) {
 		if (col.length > 1) {
 			row = col[1];
 			col = col[0];

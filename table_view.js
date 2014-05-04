@@ -24,7 +24,7 @@
 			var tr = d('tr')
 				.append(d('td.header.row-header').html(row))
 				.append(f.range(model.cols()).map(function(col) {
-					return model.get(col, row).el();
+					return model.get(row, col).el();
 				}).get());
 			tbody.append(tr);
 		});

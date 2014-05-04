@@ -33,13 +33,14 @@
 	App.prototype.handleEvent = function(event) {
 		switch (event.type) {
 			case 'keydown':
-				this._keydown(event.keyCode);
+				this._keydown(event);
 				break;
 		}
 	};
 
-	App.prototype._keydown = function(code) {
-		switch (code) {
+	App.prototype._keydown = function(event) {
+		var keyCode = event.keyCode;
+		switch (keyCode) {
 			case RETURN:
 				this._selection.edit();
 				break;
@@ -47,7 +48,10 @@
 			case ARROW_UP.code:
 			case ARROW_RIGHT.code:
 			case ARROW_DOWN.code:
-				this._selection.shift(ARROW_KEYS[code]);
+				if (event.shiftKey)
+					this._selection.expand(ARROW_KEYS[keyCode]);
+				else
+					this._selection.shift(ARROW_KEYS[keyCode]);
 				break;
 		}
 	};
@@ -65,7 +69,7 @@
 		if (col < 0 || row < 0 || col >= this._width || row >= this._height)
 			return;
 
-		this._selection.select(this._model.get(col, row));
+		this._selection.select(this._model.get(row, col));
 	};
 
 	App.prototype._parse = function(val) {

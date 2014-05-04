@@ -16,14 +16,16 @@
 		this._el = d('div.selection');
 		this._background = d('div.background');
 		this._handle = d('div.handle');
-		this._selected = undefined;
+		this._origin = undefined;
+		this._selection = undefined;
 		this._input = new Supreme.Input();
 		document.body.appendChild(this._el.append(this._background.append(this._handle)).get());
 	}
 
 	Selection.prototype.select = function(cell) {
 		this._input.cancelEditing();
-		this._selected = cell;
+		this._origin = cell;
+		this._selection = [[cell]];
 		var bounds = cell.bounds();
 		this._el
 			.style('left', px(bounds.x))
@@ -32,22 +34,37 @@
 			.style('height', px(bounds.height + 1));
 	};
 
+	Selection.prototype._isValid = function(col, row) {
+		return col >= 0 && row >= 0 && col < this._app.width() && row < this._app.height();
+	};
+
 	Selection.prototype.shift = function(direction) {
-		if (d.isUndefined(this._selected)) {
+		if (d.isUndefined(this._origin)) {
 			console.error("Tried shifting without any previous selection set, selecting cell at (0,0)");
 			return this.select(this._app._model.get(0, 0));
 		}
 
-		var col = this._selected._col + direction.dx;
-		var row = this._selected._row + direction.dy;
-		if (col < 0 || row < 0 || col >= this._app.width() || row >= this._app.height())
+		var col = this._origin._col + direction.dx;
+		var row = this._origin._row + direction.dy;
+		if (!this._isValid(col, row))
 			return;
 
-		this.select(this._app._model.get(col, row));
+		this.select(this._app._model.get(row, col));
+	};
+
+	Selection.prototype.expand = function(direction) {
+		console.log(direction);
+		var col = this._origin.col() + direction.dx;
+		var row = this._origin.row() + direction.dy;
+		if (!this._isValid(col, row))
+			return;
+
+		//if (direction.dx === 1)
+
 	};
 
 	Selection.prototype.edit = function() {
-		this._input._edit(this._selected);
+		this._input._edit(this._origin);
 	};
 
 	Supreme.Selection = Selection;

@@ -67,5 +67,13 @@
 		return this._el;
 	};
 
+	Cell.prototype.col = function() {
+		return this._col;
+	};
+
+	Cell.prototype.row = function() {
+		return this._row;
+	};
+
 	Supreme.Cell = Cell;
 })(window.Supreme = window.Supreme || {});
