@@ -56,30 +56,24 @@ th {
 	width: 40px;
 }
 
+
+/*---------------------
+	Cells
+---------------------*/
+
 .cell {
 	background: #2f3436;
-	color: whitesmoke;
-}
-
-.editable {
 	border: 1px solid #373b3c;
+	color: whitesmoke;
+	height: 14px;
 	outline: 0;
+	padding: 5px;
 	text-align: right;
+	width: 125px;
 }
 
-.editable.active {
+.cell.active {
 	background: #3dafc7;
-}
-
-/*=================*/
-.test {
-    border: 1px solid black;
-    height: 20px;
-    width: 200px;
-}
-
-.test:focus {
-    background: red;
 }
 
 /*---------------------
@@ -107,4 +101,14 @@ th {
 	position: absolute;
 	right: -5px;
 	width: 8px;
+}
+
+/*---------------------
+	Input
+---------------------*/
+
+.input {
+	color: whitesmoke;
+	outline: 0;
+	padding: 5px;
 }

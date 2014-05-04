@@ -11,8 +11,6 @@
 	function d(element, find) {
 		if (element[0] === '.' || find) {
 			this._el = document.querySelector(element);
-			console.log(this._el);
-			console.trace();
 			return this;
 		}
 

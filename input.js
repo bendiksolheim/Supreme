@@ -21,14 +21,17 @@
 	Input.prototype.handleEvent = function(event) {
 		switch (event.type) {
 			case 'keydown':
-				this._keyDown(event.keyCode);
+				this._keyDown(event);
 				break;
 		}
 	};
 
-	Input.prototype._keyDown = function(keyCode) {
-		if (keyCode === 13)
+	Input.prototype._keyDown = function(event) {
+		event.stopPropagation();
+		var keyCode = event.keyCode;
+		if (keyCode === 13) {
 			this._doneEditing();
+		}
 	};
 
 	Input.prototype._moveTo = function(cellBounds) {
@@ -57,7 +60,14 @@
 			.style('display', 'none')
 			.value('')
 			.blur();
-		this.cell.focus();
+	};
+
+	Input.prototype.cancelEditing = function() {
+		this.cell = undefined;
+		this._el
+			.value('')
+			.style('display', 'none')
+			.blur();
 	};
 
 	Supreme.Input = Input;

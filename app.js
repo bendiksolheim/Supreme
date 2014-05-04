@@ -22,7 +22,6 @@
 		this._height = height;
 		this._model = new Supreme.Model(this, width, height);
 		this._view = new Supreme.TableView(this, table, this._model);
-		this._input = new Supreme.Input();
 		this._selection = new Supreme.Selection(this);
 		this._env = new diy.Environment();
 		d('html', true).on('keydown', this, false);
@@ -42,7 +41,7 @@
 	App.prototype._keydown = function(code) {
 		switch (code) {
 			case RETURN:
-				this._edit(this.focusedCell);
+				this._selection.edit();
 				break;
 			case ARROW_LEFT.code:
 			case ARROW_UP.code:
@@ -69,20 +68,6 @@
 		this._selection.select(this._model.get(col, row));
 	};
 
-	App.prototype._setFocused = function(cell) {
-		if (this.focusedCell) this.focusedCell._unfocus();
-
-		this.focusedCell = cell;
-	};
-
-	App.prototype._edit = function(cell) {
-		this._input._edit(cell);
-	};
-
-	App.prototype._doneEditing = function(cell) {
-		this._input._doneEditing();
-	};
-
 	App.prototype._parse = function(val) {
 		var parsed = diy.Parser.parse(val);
 		return parsed;
@@ -91,6 +76,14 @@
 	App.prototype._evaluate = function(ast) {
 		var val = diy.Evaluator.evaluate(ast, this._env);
 		return val;
+	};
+
+	App.prototype.width = function() {
+		return this._width;
+	};
+
+	App.prototype.height = function() {
+		return this._height;
 	};
 
 	Supreme.App = App;

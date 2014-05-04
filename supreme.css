@@ -56,23 +56,55 @@ th {
 	width: 40px;
 }
 
-.editable {
+/*---------------------
+	Cells
+---------------------*/
+
+.cell {
 	border: 1px solid #f3f3f3;
+	height: 14px;
 	outline: 0;
+	padding: 5px;
 	text-align: right;
+	width: 125px;
 }
 
-.editable.active {
+.cell.active {
 	background: #edbc76;
 }
 
-/*=================*/
-.test {
-    border: 1px solid black;
-    height: 20px;
-    width: 200px;
+/*---------------------
+	Focus
+---------------------*/
+
+.selection {
+	background: transparent;
+	border: 2px solid #3dafc7;
+	position: absolute;
 }
 
-.test:focus {
-    background: red;
+.selection .background {
+	background: transparent;
+	height: 100%;
+	position: relative;
+	width: 100%;
+}
+
+.selection .handle {
+	background: #3dafc7;
+	border: 2px solid white;
+	bottom: -5px;
+	height: 8px;
+	position: absolute;
+	right: -5px;
+	width: 8px;
+}
+
+/*---------------------
+	Input
+---------------------*/
+
+.input {
+	outline: 0;
+	padding: 5px;
 }

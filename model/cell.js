@@ -23,7 +23,7 @@
 	Cell.prototype.handleEvent = function(event) {
 		switch (event.type) {
 			case 'mousedown':
-				this._focus();
+				this._parent.select(this);
 				break;
 			case 'dblclick':
 				this._parent._edit(this);
@@ -34,19 +34,6 @@
 			default:
 				debugger;
 		}
-	};
-
-	Cell.prototype._focus = function() {
-		/*if (this._el.hasClass('active'))
-			return;
-
-		this._el.addClass('active');*/
-		this._parent.select(this);
-		//this._el.focus();
-	};
-
-	Cell.prototype._unfocus = function() {
-		this._el.removeClass('active');
 	};
 
 	Cell.prototype._parse = function(val) {
