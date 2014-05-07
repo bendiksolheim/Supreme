@@ -43,8 +43,13 @@
 	Cell.prototype.change = function(value) {
 		this._rawValue = value;
 		if (value[0] === '(') {
-			this._parsedValue = this._parse(value);
-			value = this._parent._evaluate(this._parsedValue);
+			try {
+				this._parsedValue = this._parse(value);
+				value = this._parent._evaluate(this._parsedValue);
+			} catch(e) {
+				console.error(e.message);
+				value = "#Error";
+			}
 		}
 		this._displayValue = value;
 		this._el.html(this._displayValue);

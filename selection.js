@@ -17,7 +17,7 @@
 		this._background = d('div.background');
 		this._handle = d('div.handle');
 		this._origin = undefined;
-		this._selection = undefined;
+		this._model = undefined;
 		this._input = new Supreme.Input();
 		document.body.appendChild(this._el.append(this._background.append(this._handle)).get());
 	}
@@ -25,7 +25,7 @@
 	Selection.prototype.select = function(cell) {
 		this._input.cancelEditing();
 		this._origin = cell;
-		this._selection = [[cell]];
+		this._model = new Supreme.Model(this._app, this._app._model.getSubset(cell.row(), cell.col(), cell.row() + 1, cell.col() + 1));
 		var bounds = cell.bounds();
 		this._el
 			.style('left', px(bounds.x))
@@ -59,7 +59,12 @@
 		if (!this._isValid(col, row))
 			return;
 
-		//if (direction.dx === 1)
+		var fromRow = this._origin.row();
+		var fromCol = this._origin.col();
+		var toRow = fromRow + this._model.rows() + direction.dy;
+		var toCol = fromCol + this._model.cols() + direction.dx;
+		this._model = new Supreme.Model(this._app, this._app._model.getSubset(fromRow, fromCol, toRow, toCol));
+		console.log(this._model);
 
 	};
 

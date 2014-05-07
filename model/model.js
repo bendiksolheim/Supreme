@@ -18,11 +18,23 @@
 		return parseInt(n, 10);
 	}
 
+	/*
+		Usage:
+		new Model(app, cols, rows);
+		new Model(app, matrix);
+	*/
 	function Model(app, cols, rows) {
 		this._app = app;
-		this._cols = cols;
-		this._rows = rows;
-		this._model = this._create(cols, rows);
+
+		if (Array.isArray(cols)) {
+			this._cols = cols[0].length;
+			this._rows = cols.length;
+			this._model = cols;
+		} else {
+			this._cols = cols;
+			this._rows = rows;
+			this._model = this._create(cols, rows);
+		}
 	}
 
 	Model.prototype._create = function(cols, rows) {
@@ -44,6 +56,45 @@
 		col = normalize(col);
 		row = normalize(row);
 		return this._model[row][col];
+	};
+
+	Model.prototype.getRow = function(n, from, to) {
+		if (n < 0 || n >= this._rows)
+			return null;
+
+		if (d.isUndefined(from))
+			from = 0;
+
+		if (d.isUndefined(to))
+			to = this.cols();
+
+
+		return this._model[n].slice(from, to);
+	};
+
+	Model.prototype.getCol = function(n, from, to) {
+		if (n < 0 || n >= this._cols)
+			return null;
+
+		if (d.isUndefined(from))
+			from = 0;
+
+		if (d.isUndefined(to))
+			to = this.rows();
+
+		var self = this;
+		return f.range(from, to).map(function(row) {
+			return self._model[row][n];
+		}).get();
+	};
+
+	Model.prototype.getSubset = function(fromRow, fromCol, toRow, toCol) {
+		var self = this;
+		return f.range(fromRow, toRow).map(function(row) {
+			return f.range(fromCol, toCol).map(function(col) {
+				return self._model[row][col];
+			}).get();
+		}).get();
 	};
 
 	Model.prototype.rows = function() {
