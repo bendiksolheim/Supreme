@@ -9,6 +9,10 @@
 
 	var CHARACTERS = /[A-Z]/;
 
+	function toChar(n) {
+		return String.fromCharCode(n + 65);
+	}
+
 	function fromCharacter(c) {
 		return c.charCodeAt() - 65;
 	}
@@ -41,10 +45,10 @@
 		var app = this._app;
 		var model = f.range(rows).map(function(row) {
 			return f.range(cols).map(function(col) {
-				return new Supreme.Cell(col, row, '', app);
+				var id = toChar(col) + row;
+				return new Supreme.Cell(id, col, row, '', app);
 			}).get();
 		}).get();
-		console.log(model);
 		return model;
 	};
 

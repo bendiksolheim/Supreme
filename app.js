@@ -77,6 +77,12 @@
 		return parsed;
 	};
 
+	App.prototype.updateEnvironment = function(key, val) {
+		var tmp = {};
+		tmp[key] = val;
+		this._env = this._env.extend(tmp);
+	};
+
 	App.prototype._evaluate = function(ast) {
 		var val = diy.Evaluator.evaluate(ast, this._env);
 		return val;

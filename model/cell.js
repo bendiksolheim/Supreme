@@ -1,10 +1,11 @@
 (function(Supreme) {
 
-	function isExpression(val) {
-		return val[0] === '=';
+	function isNumber(n) {
+		return !isNaN(parseInt(n, 10)) && isFinite(n);
 	}
 
-	function Cell(col, row, value, parent) {
+	function Cell(id, col, row, value, parent) {
+		this._id = id;
 		this._col = col;
 		this._row = row;
 		this._displayValue = value;
@@ -36,22 +37,22 @@
 		}
 	};
 
-	Cell.prototype._parse = function(val) {
-		return this._parent._parse(val);
-	};
-
 	Cell.prototype.change = function(value) {
 		this._rawValue = value;
 		if (value[0] === '(') {
 			try {
-				this._parsedValue = this._parse(value);
+				this._parsedValue = this._parent._parse(value);
 				value = this._parent._evaluate(this._parsedValue);
 			} catch(e) {
 				console.error(e.message);
 				value = "#Error";
 			}
 		}
+		if (isNumber(value))
+			value = parseInt(value, 10);
+
 		this._displayValue = value;
+		this._parent.updateEnvironment(this._id, value);
 		this._el.html(this._displayValue);
 	};
 

@@ -1,4 +1,8 @@
 (function(Supreme) {
+	function toChar(n) {
+		return String.fromCharCode(n + 65);
+	}
+
 	function TableView(app, table, model) {
 		this._app = app;
 		this._table = table;
@@ -11,7 +15,7 @@
 		var tr = d('tr')
 			.append(d('th.header.corner'))
 			.append(f.range(model.cols()).map(function(col) {
-				return d('th.header.col-header').html(String.fromCharCode(col + 65));
+				return d('th.header.col-header').html(toChar(col));
 			}).get());
 		thead.append(tr);
 		this._table.append(thead);
