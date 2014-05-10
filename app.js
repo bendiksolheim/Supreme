@@ -96,6 +96,19 @@
 		return this._height;
 	};
 
+	App.prototype.eval = function(exp) {
+		var value = null;
+		try {
+			var parsed = diy.Parser.parse(exp);
+			value = diy.Evaluator.evaluate(parsed, this._env);
+		} catch (e) {
+			console.error(e.message);
+			value = "#Error";
+		}
+
+		return value;
+	};
+
 	Supreme.App = App;
 
 })(window.Supreme = window.Supreme || {});

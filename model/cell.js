@@ -1,7 +1,11 @@
 (function(Supreme) {
 
-	function isNumber(n) {
+	function isInteger(n) {
 		return !isNaN(parseInt(n, 10)) && isFinite(n);
+	}
+
+	function isExpression(s) {
+		return typeof s !== 'undefined' && s[0] === '(';
 	}
 
 	function Cell(id, col, row, value, parent) {
@@ -9,8 +13,7 @@
 		this._col = col;
 		this._row = row;
 		this._displayValue = value;
-		this._rawValue = value;
-		this._parsedValue = '';
+		this._value = '';
 		this._parent = parent;
 		this._el = this._createElement();
 	}
@@ -38,17 +41,11 @@
 	};
 
 	Cell.prototype.change = function(value) {
-		this._rawValue = value;
-		if (value[0] === '(') {
-			try {
-				this._parsedValue = this._parent._parse(value);
-				value = this._parent._evaluate(this._parsedValue);
-			} catch(e) {
-				console.error(e.message);
-				value = "#Error";
-			}
-		}
-		if (isNumber(value))
+		this._value = value;
+		if (isExpression(value))
+			value = this._parent.eval(value);
+
+		if (isInteger(value))
 			value = parseInt(value, 10);
 
 		this._displayValue = value;
@@ -56,8 +53,12 @@
 		this._el.html(this._displayValue);
 	};
 
-	Cell.prototype.value = function(value) {
-		return this._rawValue;
+	Cell.prototype.value = function() {
+		return this._value;
+	};
+
+	Cell.prototype.displayValue = function() {
+		return this._displayValue;
 	};
 
 	Cell.prototype.bounds = function() {
