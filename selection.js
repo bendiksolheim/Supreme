@@ -39,7 +39,7 @@
 	};
 
 	Selection.prototype.shift = function(direction) {
-		if (d.isUndefined(this._origin)) {
+		if (f.isUndefined(this._origin)) {
 			console.error("Tried shifting without any previous selection set, selecting cell at (0,0)");
 			return this.select(this._app._model.get(0, 0));
 		}

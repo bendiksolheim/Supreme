@@ -23,7 +23,7 @@
 		this._model = new Supreme.Model(this, width, height);
 		this._view = new Supreme.TableView(this, table, this._model);
 		this._selection = new Supreme.Selection(this);
-		this._env = new diy.Environment();
+		this._evaluator = new Supreme.Evaluator(this);
 		d('html', true).on('keydown', this, false);
 
 		// focus first element
@@ -72,41 +72,12 @@
 		this._selection.select(this._model.get(row, col));
 	};
 
-	App.prototype._parse = function(val) {
-		var parsed = diy.Parser.parse(val);
-		return parsed;
-	};
-
-	App.prototype.updateEnvironment = function(key, val) {
-		var tmp = {};
-		tmp[key] = val;
-		this._env = this._env.extend(tmp);
-	};
-
-	App.prototype._evaluate = function(ast) {
-		var val = diy.Evaluator.evaluate(ast, this._env);
-		return val;
-	};
-
 	App.prototype.width = function() {
 		return this._width;
 	};
 
 	App.prototype.height = function() {
 		return this._height;
-	};
-
-	App.prototype.eval = function(exp) {
-		var value = null;
-		try {
-			var parsed = diy.Parser.parse(exp);
-			value = diy.Evaluator.evaluate(parsed, this._env);
-		} catch (e) {
-			console.error(e.message);
-			value = "#Error";
-		}
-
-		return value;
 	};
 
 	f.extend(App.prototype, Supreme.Events);
