@@ -46,5 +46,24 @@
 		return this.array;
 	};
 
+	f.isUndefined = function(v) {
+		return typeof v === 'undefined';
+	}
+
+	f.isObject = function(obj) {
+		return obj === Object(obj);
+	}
+
+	// from underscore.js
+	f.extend = function(obj) {
+		if (!f.isObject(obj)) return obj;
+		new f(Array.prototype.slice.call(arguments, 1)).each(function(source) {
+			for (var prop in source)
+				obj[prop] = source[prop];
+		});
+
+		return obj;
+	}
+
 	window.f = f;
 })(window);

@@ -1,9 +1,5 @@
 (function(window) {
 
-	function isUndefined(v) {
-		return typeof v === 'undefined';
-	}
-
 	function _d(element, find) {
 		return new d(element, find);
 	}
@@ -94,7 +90,7 @@
 	};
 
 	d.prototype.value = function(val) {
-		if (!isUndefined(val)) {
+		if (!f.isUndefined(val)) {
 			this._el.value = val;
 			return this;
 		}
@@ -103,15 +99,13 @@
 	};
 
 	d.prototype.domProp = function(prop, val) {
-		if (isUndefined(val)) {
+		if (f.isUndefined(val)) {
 			return this._el[prop];
 		}
 
 		this._el[prop] = val;
 		return this;
 	};
-
-	_d.isUndefined = isUndefined;
 
 	window.d = _d;
 })(window);
