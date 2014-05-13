@@ -109,6 +109,8 @@
 		return value;
 	};
 
+	f.extend(App.prototype, Supreme.Events);
+
 	Supreme.App = App;
 
 })(window.Supreme = window.Supreme || {});
