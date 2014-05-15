@@ -47,6 +47,11 @@
 
 		this._displayValue = value;
 		this._el.html(this._displayValue);
+		this.trigger('cell:updated');
+	};
+
+	Cell.prototype.evaluate = function() {
+		this._app.trigger('cell:changed', this);
 	};
 
 	Cell.prototype.bounds = function() {
@@ -74,5 +79,8 @@
 		return this._id;
 	};
 
+	f.extend(Cell.prototype, Supreme.Events);
 	Supreme.Cell = Cell;
+
+	f.extend(Cell.prototype, Supreme.Events);
 })(window.Supreme = window.Supreme || {});
