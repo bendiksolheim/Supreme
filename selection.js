@@ -1,5 +1,7 @@
 (function(Supreme) {
 
+	var commander = Supreme.commander;
+
 	function px(value) {
 		return value + 'px';
 	}
@@ -20,6 +22,11 @@
 		this._model = undefined;
 		this._input = new Supreme.Input();
 		document.body.appendChild(this._el.append(this._background.append(this._handle)).get());
+
+		commander.on('key:up', this.shift, this);
+		commander.on('key:right', this.shift, this);
+		commander.on('key:down', this.shift, this);
+		commander.on('key:left', this.shift, this);
 	}
 
 	Selection.prototype.select = function(cell) {

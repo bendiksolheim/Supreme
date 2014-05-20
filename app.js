@@ -1,5 +1,7 @@
 (function(Supreme) {
 
+	var commander = Supreme.commander;
+
 	var RETURN = 13;
 	var ARROW_LEFT = {code: 37, dx: -1, dy: 0};
 	var ARROW_UP = {code: 38, dx: 0, dy: -1};
@@ -24,7 +26,6 @@
 		this._view = new Supreme.TableView(this, table, this._model);
 		this._selection = new Supreme.Selection(this);
 		this._evaluator = new Supreme.Evaluator(this);
-		d('html', true).on('keydown', this, false);
 
 		// focus first element
 		this._selection.select(this._model.get(0,0));
@@ -38,7 +39,7 @@
 		}
 	};
 
-	App.prototype._keydown = function(event) {
+	/*App.prototype._keydown = function(event) {
 		var keyCode = event.keyCode;
 		switch (keyCode) {
 			case RETURN:
@@ -54,13 +55,13 @@
 					this._selection.shift(ARROW_KEYS[keyCode]);
 				break;
 		}
-	};
+	};*/
 
 	App.prototype.select = function(cell) {
 		this._selection.select(cell);
 	};
 
-	App.prototype.shift = function(cell, direction) {
+	/*App.prototype.shift = function(cell, direction) {
 		if (d.isUndefined(cell))
 			return this._model.get(0, 0)._focus();
 
@@ -70,7 +71,7 @@
 			return;
 
 		this._selection.select(this._model.get(row, col));
-	};
+	};*/
 
 	App.prototype.width = function() {
 		return this._width;
