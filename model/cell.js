@@ -36,7 +36,7 @@
 
 	Cell.prototype.change = function(value) {
 		this._value = value;
-		this._app.trigger('cell:changed', this);
+		commander.trigger('cell:changed', this);
 	};
 
 	Cell.prototype.value = function() {
@@ -53,7 +53,7 @@
 	};
 
 	Cell.prototype.evaluate = function() {
-		this._app.trigger('cell:changed', this);
+		commander.trigger('cell:changed', this);
 	};
 
 	Cell.prototype.bounds = function() {

@@ -32,6 +32,7 @@
 		var key = keys[keyCode];
 		if (f.isUndefined(key))
 			return;
+		
 		if (!f.isUndefined(key.metaKey) && key.metaKey !== event.metaKey)
 			return
 

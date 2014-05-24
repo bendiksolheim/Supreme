@@ -1,5 +1,7 @@
 (function(Supreme) {
 
+	var commander = Supreme.commander;
+
 	var CELL_REGEX = /[A-Z][0-9]/i;
 
 	function isInteger(n) {
@@ -14,7 +16,7 @@
 		this._app = app;
 		this._env = new diy.Environment();
 
-		app.on('cell:changed', this.evaluate, this);
+		commander.on('cell:changed', this.evaluate, this);
 	}
 
 	Evaluator.prototype.evaluateExpression = function(expression, cell) {
