@@ -2,10 +2,6 @@
 
 	var commander = Supreme.commander;
 
-	function fromNumber(n) {
-		return String.fromCharCode(n + 65);
-	}
-
 	function App(table, width, height) {
 		this._table = table;
 		this._width = width;
@@ -18,10 +14,6 @@
 		// focus first element
 		this._selection.select(this._model.get(0,0));
 	}
-
-	App.prototype.select = function(cell) {
-		this._selection.select(cell);
-	};
 
 	App.prototype.width = function() {
 		return this._width;

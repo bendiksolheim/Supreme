@@ -16,6 +16,7 @@
 		this._input = new Supreme.Input();
 		document.body.appendChild(this._el.append(this._background.append(this._handle)).get());
 
+		commander.on('cell:select', this.select, this);
 		commander.on('cell:edit', this.edit, this);
 		commander.on('key:up', this.shift, this);
 		commander.on('key:right', this.shift, this);
@@ -25,7 +26,10 @@
 		commander.on('cell:emph', this.command, this);
 	}
 
-	Selection.prototype.select = function(cell) {
+	Selection.prototype.select = function(event, cell) {
+		if (f.isUndefined(cell))
+			cell = event;
+		
 		this._input.cancelEditing();
 		this._origin = cell;
 		this._model = new Supreme.Model(this._app, this._app._model.getSubset(cell.row(), cell.col(), cell.row() + 1, cell.col() + 1));

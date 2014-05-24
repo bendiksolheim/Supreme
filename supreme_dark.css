@@ -77,13 +77,14 @@ th {
 }
 
 /*---------------------
-	Focus
+	Selection
 ---------------------*/
 
 .selection {
 	background: transparent;
 	border: 2px solid #3dafc7;
 	position: absolute;
+	pointer-events: none;
 }
 
 .selection .background {
