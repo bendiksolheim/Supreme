@@ -13,6 +13,7 @@
 
 		trigger: function(event) {
 			var args = Array.prototype.slice.call(arguments, 1);
+			args.unshift(event);
 			var callbacks = this._callbacks || {};
 			var events = callbacks[event] || [];
 			events.forEach(function(event) {

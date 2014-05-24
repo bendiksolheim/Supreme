@@ -79,6 +79,18 @@
 		return this._id;
 	};
 
+	Cell.prototype.command = function(event) {
+		console.log(event);
+		switch (event) {
+			case 'cell:bold':
+				this._el.toggleClass('bold');
+				break;
+			case 'cell:emph':
+				this._el.toggleClass('emph');
+				break;
+		}
+	};
+
 	f.extend(Cell.prototype, Supreme.Events);
 	Supreme.Cell = Cell;
 

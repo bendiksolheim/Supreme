@@ -42,7 +42,7 @@
 		}
 	};
 
-	Evaluator.prototype.evaluate = function(cell) {
+	Evaluator.prototype.evaluate = function(event, cell) {
 		var value = cell.value();
 		if (isExpression(value))
 			value = this.evaluateExpression(value, cell);

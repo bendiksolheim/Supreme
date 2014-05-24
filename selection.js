@@ -6,13 +6,6 @@
 		return value + 'px';
 	}
 
-	/*
-
-	Selection.js should handle all selection (/focus) logic, maybe including input.
-	Should probably consider moving input into this class
-
-	*/
-
 	function Selection(app) {
 		this._app = app;
 		this._el = d('div.selection');
@@ -23,10 +16,13 @@
 		this._input = new Supreme.Input();
 		document.body.appendChild(this._el.append(this._background.append(this._handle)).get());
 
+		commander.on('cell:edit', this.edit, this);
 		commander.on('key:up', this.shift, this);
 		commander.on('key:right', this.shift, this);
 		commander.on('key:down', this.shift, this);
 		commander.on('key:left', this.shift, this);
+		commander.on('cell:bold', this.command, this);
+		commander.on('cell:emph', this.command, this);
 	}
 
 	Selection.prototype.select = function(cell) {
@@ -45,7 +41,7 @@
 		return col >= 0 && row >= 0 && col < this._app.width() && row < this._app.height();
 	};
 
-	Selection.prototype.shift = function(direction) {
+	Selection.prototype.shift = function(event, direction) {
 		if (f.isUndefined(this._origin)) {
 			console.error("Tried shifting without any previous selection set, selecting cell at (0,0)");
 			return this.select(this._app._model.get(0, 0));
@@ -77,6 +73,10 @@
 
 	Selection.prototype.edit = function() {
 		this._input._edit(this._origin);
+	};
+
+	Selection.prototype.command = function(event) {
+		this._origin.command(event);
 	};
 
 	Supreme.Selection = Selection;

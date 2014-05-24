@@ -1,14 +1,13 @@
 (function(Supreme) {
 
-	/*var commands = [
-		'ARROW_LEFT': {}
-	]*/
-
 	var keys = {
+		'13': {event: 'cell:edit'},
 		'37': {event: 'key:left', args: {dx: -1, dy: 0}},
 		'38': {event: 'key:up', args: {dx: 0, dy: -1}},
 		'39': {event: 'key:right', args: {dx: 1, dy: 0}},
-		'40': {event: 'key:down', args: {dx: 0, dy: 1}}
+		'40': {event: 'key:down', args: {dx: 0, dy: 1}},
+		'66': {event: 'cell:bold', metaKey: true},
+		'73': {event: 'cell:emph', metaKey: true}
 	};
 
 	function Command(el) {
@@ -29,9 +28,12 @@
 
 	Command.prototype.keydown = function(event) {
 		var keyCode = event.keyCode;
+		console.log('keyCode: ' + keyCode);
 		var key = keys[keyCode];
 		if (f.isUndefined(key))
 			return;
+		if (!f.isUndefined(key.metaKey) && key.metaKey !== event.metaKey)
+			return
 
 		this.trigger(key.event, key.args);
 	};

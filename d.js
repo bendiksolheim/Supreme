@@ -79,6 +79,10 @@
 		return this;
 	};
 
+	d.prototype.toggleClass = function(c) {
+		this._el.classList.toggle(c);
+	}
+
 	d.prototype.focus = function() {
 		this._el.focus();
 		return this;
