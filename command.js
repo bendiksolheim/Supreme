@@ -10,17 +10,26 @@
 		'40':				{event: 'selecten:shift', args: {dx: 0, dy: 1}},
 		'meta+66':			{event: 'cell:bold'},
 		'meta+73':			{event: 'cell:emph'},
-		'meta+shift+80':	{event: 'special', preventDefault: true}
+		'meta+shift+80':	{event: 'commander:toggle', preventDefault: true}
 	};
 
 	var special = {'16': true, '17': true, '18': true, '91': true};
 
 	function Command(el) {
-		this._el = el;
+		this._container = el;
+		this._el = this._createElement();
+		document.body.appendChild(this._el.get());
+		this._addCommands();
 	}
 
-	Command.prototype.addCommands = function() {
-		this._el.on('keydown', this, false);
+	Command.prototype._addCommands = function() {
+		this._container.on('keydown', this, false);
+		this.on('commander:toggle', this.toggle, this);
+	};
+
+	Command.prototype._createElement = function() {
+		var input = d('input.commander');
+		return input;
 	};
 
 	Command.prototype.handleEvent = function(event) {
@@ -53,8 +62,14 @@
 		this.trigger(key.event, key.args);
 	};
 
+	Command.prototype.toggle = function() {
+		this._el.toggleClass('active');
+		this._el.focus();
+	};
+
 	f.extend(Command.prototype, Supreme.Events);
-	Supreme.commander = new Command(d('html', true))
-	Supreme.commander.addCommands();
+	//Supreme.commander = new Command(d('.table'));
+	//Supreme.commander.addCommands();
+	Supreme.Command = Command;
 
 })(window.Supreme = window.Supreme || {});

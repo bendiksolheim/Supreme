@@ -1,0 +1,17 @@
+.commander {
+	transition: opacity .5s;
+	border: 7px solid black;
+	font-size: 18px;
+	left: 50%;
+	line-height: 20px;
+	margin-left: -250px;
+	opacity: 0;
+	outline: 0;
+	position: fixed;
+	top: 0;
+	width: 500px;
+}
+
+.commander.active {
+	opacity: 1;
+}

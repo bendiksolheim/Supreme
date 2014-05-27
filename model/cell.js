@@ -1,7 +1,5 @@
 (function(Supreme) {
 
-	var commander = Supreme.commander;
-
 	function Cell(id, col, row, value, app) {
 		this._id = id;
 		this._col = col;
@@ -22,10 +20,10 @@
 	Cell.prototype.handleEvent = function(event) {
 		switch (event.type) {
 			case 'mousedown':
-				commander.trigger('cell:select', this);
+				this._app.commander().trigger('cell:select', this);
 				break;
 			case 'dblclick':
-				commander.trigger('cell:edit', this);
+				this._app.commander().trigger('cell:edit', this);
 				break;
 			case 'change':
 				this.change(this._el.html());
@@ -37,7 +35,7 @@
 
 	Cell.prototype.change = function(value) {
 		this._value = value;
-		commander.trigger('cell:changed', this);
+		this._app.commander().trigger('cell:changed', this);
 	};
 
 	Cell.prototype.value = function() {
@@ -55,7 +53,7 @@
 	};
 
 	Cell.prototype.evaluate = function() {
-		commander.trigger('cell:changed', this);
+		this._app.commander().trigger('cell:changed', this);
 	};
 
 	Cell.prototype.setType = function() {

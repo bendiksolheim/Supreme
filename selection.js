@@ -1,7 +1,5 @@
 (function(Supreme) {
 
-	var commander = Supreme.commander;
-
 	function px(value) {
 		return value + 'px';
 	}
@@ -16,11 +14,11 @@
 		this._input = new Supreme.Input();
 		document.body.appendChild(this._el.append(this._background.append(this._handle)).get());
 
-		commander.on('cell:select', this.select, this);
-		commander.on('cell:edit', this.edit, this);
-		commander.on('selecten:shift', this.shift, this);
-		commander.on('cell:bold', this.command, this);
-		commander.on('cell:emph', this.command, this);
+		app.commander().on('cell:select', this.select, this);
+		app.commander().on('cell:edit', this.edit, this);
+		app.commander().on('selecten:shift', this.shift, this);
+		app.commander().on('cell:bold', this.command, this);
+		app.commander().on('cell:emph', this.command, this);
 	}
 
 	Selection.prototype.select = function(event, cell) {
