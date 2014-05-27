@@ -23,6 +23,10 @@
 		return this._height;
 	};
 
+	App.prototype.model = function() {
+		return this._model;
+	};
+
 	Supreme.App = App;
 
 })(window.Supreme = window.Supreme || {});

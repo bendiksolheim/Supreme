@@ -39,7 +39,7 @@
 			console.log(CELL_REGEX.test(ast[v]));
 			if (CELL_REGEX.test(ast[v])) {
 				console.log(cell);
-				this._app._model.get(ast[v]).on('cell:updated', cell.evaluate, cell);
+				this._app.model().get(ast[v]).on('cell:updated', cell.evaluate, cell);
 			}
 		}
 	};

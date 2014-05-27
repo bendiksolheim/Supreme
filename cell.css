@@ -1,3 +1,7 @@
+.cell.string {
+	text-align: left;
+}
+
 .bold {
 	font-weight: bold;
 }

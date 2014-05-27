@@ -10,6 +10,7 @@
 		this._value = '';
 		this._app = app;
 		this._el = this._createElement();
+		this.type = String;
 	}
 
 	Cell.prototype._createElement = function() {
@@ -49,11 +50,24 @@
 
 		this._displayValue = value;
 		this._el.html(this._displayValue);
+		this.setType();
 		this.trigger('cell:updated');
 	};
 
 	Cell.prototype.evaluate = function() {
 		commander.trigger('cell:changed', this);
+	};
+
+	Cell.prototype.setType = function() {
+		if (f.isNumber(this._displayValue))
+			this.type = Number;
+		else
+			this.type = String;
+
+		this._el
+			.removeClass('number')
+			.removeClass('string')
+			.addClass(this.type.name.toLowerCase());
 	};
 
 	Cell.prototype.bounds = function() {

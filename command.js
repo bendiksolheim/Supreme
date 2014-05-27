@@ -1,13 +1,15 @@
 (function(Supreme) {
 
 	var keys = {
-		'13': {event: 'cell:edit'},
-		'37': {event: 'key:left', args: {dx: -1, dy: 0}},
-		'38': {event: 'key:up', args: {dx: 0, dy: -1}},
-		'39': {event: 'key:right', args: {dx: 1, dy: 0}},
-		'40': {event: 'key:down', args: {dx: 0, dy: 1}},
-		'66': {event: 'cell:bold', metaKey: true},
-		'73': {event: 'cell:emph', metaKey: true}
+		'9':		{event: 'selecten:shift', args: {dx: 1, dy: 0}, preventDefault: true},
+		'shift+9':	{event: 'selecten:shift', args: {dx: -1, dy: 0}, preventDefault: true},
+		'13':		{event: 'cell:edit'},
+		'37':		{event: 'selecten:shift', args: {dx: -1, dy: 0}},
+		'38':		{event: 'selecten:shift', args: {dx: 0, dy: -1}},
+		'39':		{event: 'selecten:shift', args: {dx: 1, dy: 0}},
+		'40':		{event: 'selecten:shift', args: {dx: 0, dy: 1}},
+		'meta+66':	{event: 'cell:bold'},
+		'meta+73':	{event: 'cell:emph'}
 	};
 
 	function Command(el) {
@@ -28,13 +30,18 @@
 
 	Command.prototype.keydown = function(event) {
 		var keyCode = event.keyCode;
-		console.log('keyCode: ' + keyCode);
+
+		if (event.shiftKey)
+			keyCode = 'shift+' + keyCode;
+		if (event.metaKey)
+			keyCode = 'meta+' + keyCode;
+
 		var key = keys[keyCode];
+
 		if (f.isUndefined(key))
 			return;
-		
-		if (!f.isUndefined(key.metaKey) && key.metaKey !== event.metaKey)
-			return
+
+		key.preventDefault && event.preventDefault();
 
 		this.trigger(key.event, key.args);
 	};

@@ -54,6 +54,14 @@
 		return obj === Object(obj);
 	}
 
+	f.isArray = function(a) {
+		return String.prototype.toString.call(a) === '[object Array]';
+	}
+
+    f.isNumber = function(n) {
+        return /^\d+$/.test(n);
+    }
+
 	// from underscore.js
 	f.extend = function(obj) {
 		if (!f.isObject(obj)) return obj;

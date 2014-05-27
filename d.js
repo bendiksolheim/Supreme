@@ -75,7 +75,14 @@
 	};
 
 	d.prototype.removeClass = function(c) {
-		this._el.classList.remove(c);
+		if (!f.isArray(c))
+			c = c.split(' ');
+
+		var self = this;
+		f.each(c, function(c) {
+			self._el.classList.remove(c);
+		});
+
 		return this;
 	};
 

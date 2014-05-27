@@ -18,10 +18,7 @@
 
 		commander.on('cell:select', this.select, this);
 		commander.on('cell:edit', this.edit, this);
-		commander.on('key:up', this.shift, this);
-		commander.on('key:right', this.shift, this);
-		commander.on('key:down', this.shift, this);
-		commander.on('key:left', this.shift, this);
+		commander.on('selecten:shift', this.shift, this);
 		commander.on('cell:bold', this.command, this);
 		commander.on('cell:emph', this.command, this);
 	}
