@@ -15,16 +15,20 @@
 
 	var special = {'16': true, '17': true, '18': true, '91': true};
 
-	function Command(el) {
-		this._container = el;
+	function Command(app, container) {
+		this._container = container;
 		this._el = this._createElement();
-		document.body.appendChild(this._el.get());
+		container
+			.domProp('tabIndex', '-1')
+			.focus()
+			.append(this._el);
 		this._addCommands();
 	}
 
 	Command.prototype._addCommands = function() {
 		this._container.on('keydown', this, false);
 		this.on('commander:toggle', this.toggle, this);
+		this.on('blur', this._container.focus, this);
 	};
 
 	Command.prototype._createElement = function() {

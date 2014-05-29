@@ -3,9 +3,10 @@
 		return value + 'px';
 	}
 
-	function Input() {
+	function Input(app) {
+		this._app = app;
 		this._el = this._createElement();
-		document.body.appendChild(this._el.get());
+		app.container().append(this._el);
 	}
 
 	Input.prototype._createElement = function() {
@@ -14,7 +15,7 @@
 			.style('position', 'absolute')
 			.style('borderWidth', 0)
 			.style('pointerEvents', 'none')
-			.on('keydown', this, false);
+			.on('keydown blur', this, false);
 		return input;
 	};
 
@@ -23,6 +24,8 @@
 			case 'keydown':
 				this._keyDown(event);
 				break;
+			case 'blur':
+				this._app.commander().trigger('blur');
 		}
 	};
 

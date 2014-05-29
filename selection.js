@@ -11,8 +11,8 @@
 		this._handle = d('div.handle');
 		this._origin = undefined;
 		this._model = undefined;
-		this._input = new Supreme.Input();
-		document.body.appendChild(this._el.append(this._background.append(this._handle)).get());
+		this._input = new Supreme.Input(app);
+		app.container().append(this._el);
 
 		app.commander().on('cell:select', this.select, this);
 		app.commander().on('cell:edit', this.edit, this);
