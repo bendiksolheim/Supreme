@@ -14,7 +14,6 @@ body {
 
 table {
 	border-collapse: collapse;
-	outline: 0;
 	table-layout: fixed;
 	width: 100%;
 }

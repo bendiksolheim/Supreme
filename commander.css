@@ -1,5 +1,5 @@
 .commander {
-	transition: opacity .5s;
+	transition: opacity .2s, -webkit-transform .1s;
 	border: 7px solid black;
 	font-size: 18px;
 	left: 50%;
@@ -9,9 +9,11 @@
 	outline: 0;
 	position: fixed;
 	top: 0;
+	-webkit-transform: translateY(-25px);
 	width: 500px;
 }
 
 .commander.active {
 	opacity: 1;
+	-webkit-transform: translateY(0);
 }

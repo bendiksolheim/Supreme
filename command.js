@@ -20,6 +20,7 @@
 		this._el = this._createElement();
 		container
 			.domProp('tabIndex', '-1')
+			.style('outline', 0)
 			.focus()
 			.append(this._el);
 		this._addCommands();
