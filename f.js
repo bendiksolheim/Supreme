@@ -1,5 +1,9 @@
 (function(window) {
 
+	var isArray = Array.isArray || function(v) {
+		return Object.prototype.toString.call(v) === '[object Array]';
+	}
+
 	function f(a) {
 		this.array = a;
 	}
@@ -54,9 +58,7 @@
 		return obj === Object(obj);
 	}
 
-	f.isArray = function(a) {
-		return String.prototype.toString.call(a) === '[object Array]';
-	}
+	f.isArray = isArray;
 
     f.isNumber = function(n) {
         return /^\d+$/.test(n);
