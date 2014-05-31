@@ -113,6 +113,7 @@
 		this._command.trigger('commander:command', this._el.value());
 		this._el
 			.removeClass('active')
+			.value('')
 			.blur();
 	};
 
