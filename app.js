@@ -7,7 +7,7 @@
 		container.append(table);
 		this._width = width;
 		this._height = height;
-		this._commander = new Supreme.Command(this, container);
+		this._commander = new Supreme.Command(this, table, container);
 		this._model = new Supreme.Model(this, width, height);
 		this._view = new Supreme.TableView(this, table, this._model);
 		this._selection = new Supreme.Selection(this);

@@ -16,7 +16,7 @@
 
 		app.commander().on('cell:select', this.select, this);
 		app.commander().on('cell:edit', this.edit, this);
-		app.commander().on('selecten:shift', this.shift, this);
+		app.commander().on('selection:shift', this.shift, this);
 		app.commander().on('cell:bold', this.command, this);
 		app.commander().on('cell:emph', this.command, this);
 	}
@@ -24,7 +24,7 @@
 	Selection.prototype.select = function(event, cell) {
 		if (f.isUndefined(cell))
 			cell = event;
-		
+
 		this._input.cancelEditing();
 		this._origin = cell;
 		this._model = new Supreme.Model(this._app, this._app._model.getSubset(cell.row(), cell.col(), cell.row() + 1, cell.col() + 1));

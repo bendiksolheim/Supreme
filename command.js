@@ -1,13 +1,13 @@
 (function(Supreme) {
 
 	var keys = {
-		'9':				{event: 'selecten:shift', args: {dx: 1, dy: 0}, preventDefault: true},
-		'shift+9':			{event: 'selecten:shift', args: {dx: -1, dy: 0}, preventDefault: true},
+		'9':				{event: 'selection:shift', args: {dx: 1, dy: 0}, preventDefault: true},
+		'shift+9':			{event: 'selection:shift', args: {dx: -1, dy: 0}, preventDefault: true},
 		'13':				{event: 'cell:edit'},
-		'37':				{event: 'selecten:shift', args: {dx: -1, dy: 0}},
-		'38':				{event: 'selecten:shift', args: {dx: 0, dy: -1}},
-		'39':				{event: 'selecten:shift', args: {dx: 1, dy: 0}},
-		'40':				{event: 'selecten:shift', args: {dx: 0, dy: 1}},
+		'37':				{event: 'selection:shift', args: {dx: -1, dy: 0}},
+		'38':				{event: 'selection:shift', args: {dx: 0, dy: -1}},
+		'39':				{event: 'selection:shift', args: {dx: 1, dy: 0}},
+		'40':				{event: 'selection:shift', args: {dx: 0, dy: 1}},
 		'meta+66':			{event: 'cell:bold'},
 		'meta+73':			{event: 'cell:emph'},
 		'meta+shift+80':	{event: 'commander:toggle', preventDefault: true}
@@ -15,21 +15,23 @@
 
 	var special = {'16': true, '17': true, '18': true, '91': true};
 
-	function Command(app, container) {
+	function Command(app, table, container) {
+		this._table = table;
 		this._container = container;
 		this._el = this._createElement();
-		container
+		table
 			.domProp('tabIndex', '-1')
 			.style('outline', 0)
-			.focus()
-			.append(this._el);
+			.focus();
+			//.append(this._el);
+		container.append(this._el);
 		this._addCommands();
 	}
 
 	Command.prototype._addCommands = function() {
-		this._container.on('keydown', this, false);
+		this._table.on('keydown', this, false);
 		this.on('commander:toggle', this.toggle, this);
-		this.on('blur', this._container.focus, this);
+		this.on('blur', function() {console.log("hei");this._table.focus()}, this);
 	};
 
 	Command.prototype._createElement = function() {
