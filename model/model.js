@@ -54,8 +54,8 @@
 
 	Model.prototype.get = function(row, col) {
 		if (row.length > 1) {
-			row = row[1];
 			col = row[0];
+			row = row.substr(1);
 		}
 		col = normalize(col);
 		row = normalize(row);
