@@ -4,6 +4,10 @@
 		return Object.prototype.toString.call(v) === '[object Array]';
 	}
 
+	var isString = function(s) {
+		return Object.prototype.toString.call(s) === '[object String]';
+	}
+
 	function f(a) {
 		this.array = a;
 	}
@@ -59,6 +63,8 @@
 	}
 
 	f.isArray = isArray;
+
+	f.isString = isString;
 
     f.isNumber = function(n) {
         return /^\d+$/.test(n);
