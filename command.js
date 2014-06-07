@@ -10,7 +10,8 @@
 		'40':				{event: 'selection:shift', args: {dx: 0, dy: 1}},
 		'meta+66':			{event: 'cell:bold'},
 		'meta+73':			{event: 'cell:emph'},
-		'meta+shift+80':	{event: 'commander:show', preventDefault: true}
+		'meta+shift+80':	{event: 'commander:show', preventDefault: true},
+		'ctrl+71':			{event: 'commander:show', args: ':', preventDefault: true}
 	};
 
 	var commands = {
@@ -53,6 +54,8 @@
 
 		console.log(keyCode);
 
+		if (event.ctrlKey)
+			keyCode = 'ctrl+' + keyCode;
 		if (event.shiftKey)
 			keyCode = 'shift+' + keyCode;
 		if (event.metaKey)
@@ -69,7 +72,9 @@
 	};
 
 	Command.prototype.command = function(event, command) {
-		console.log(command);
+		if (command[0] === ':')
+			return this.trigger('cell:jump', command.substr(1).toUpperCase());
+
 		var event = commands[command];
 		if (f.isUndefined(event))
 			return;
@@ -103,7 +108,8 @@
 		this.done();
 	};
 
-	CommandInput.prototype.show = function() {
+	CommandInput.prototype.show = function(event, args) {
+		!f.isUndefined(args) && this._el.value(args);
 		this._el
 			.addClass('active')
 			.focus();

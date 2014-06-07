@@ -19,11 +19,15 @@
 		app.commander().on('selection:shift', this.shift, this);
 		app.commander().on('cell:bold', this.command, this);
 		app.commander().on('cell:emph', this.command, this);
+		app.commander().on('cell:jump', this.select, this);
 	}
 
 	Selection.prototype.select = function(event, cell) {
 		if (f.isUndefined(cell))
 			cell = event;
+
+		if (f.isString(cell))
+			cell = this._app.model().get(cell);
 
 		this._input.cancelEditing();
 		this._origin = cell;
@@ -51,7 +55,7 @@
 		if (!this._isValid(col, row))
 			return;
 
-		this.select(this._app._model.get(row, col));
+		this.select(this._app.model().get(row, col));
 	};
 
 	Selection.prototype.expand = function(direction) {
