@@ -40,6 +40,29 @@
 		return a;
 	}
 
+	f.filter = function(array, fn) {
+		var a = [];
+		array.forEach(function(item) {
+			fn(item) && a.push(item);
+		});
+		return a;
+	}
+
+	f.flatten = function(array) {
+		function flatten(array, agg) {
+			if (array.length === 0)
+				return agg;
+
+			if (Array.isArray(array[0]))
+				return flatten(array[0].concat(array.slice(1)), agg);
+
+			agg.push(array[0]);
+			return flatten(array.slice(1), agg);
+		};
+
+		return flatten(array, []);
+	}
+
 	f.prototype.each = function(fn) {
 		this.array = f.each(this.array, fn);
 		return this;
@@ -47,6 +70,16 @@
 
 	f.prototype.map = function(fn) {
 		this.array = f.map(this.array, fn);
+		return this;
+	};
+
+	f.prototype.filter = function(fn) {
+		this.array = f.filter(this.array, fn);
+		return this;
+	};
+
+	f.prototype.flatten = function() {
+		this.array = f.flatten(this.array);
 		return this;
 	};
 
